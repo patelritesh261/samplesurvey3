@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<script src="samplesurvey/node_modules/angular/angular.js"></script>
+
+
+<body>
+
+
+
+<div ng-app="myShoppingList" ng-controller="myCtrl">
+            <br />
+			<table border="1">
+				<thead>
+					<tr>
+						<td>Question</td>
+						<td>A</td>
+						<td>B</td>
+						<td>C</td>
+						<td>D</td>
+                        <td>Remove Item</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="item in items">
+						<td >{{item.question}}</td>
+						<td>{{item.option1}}</td>
+						<td>{{item.option2}}</td>
+						<td>{{item.option3}}</td>
+						<td>{{item.option4}}</td>
+						<td><input type="button" value="Remove" ng-click="removeItem($index)" /></td>
+					</tr>
+				</tbody>
+			</table>
+			<br />
+
+			<br />
+			<table>
+				<tr>
+					<td>Question: </td>
+					<td><input type="text" ng-model="item.question" /></td>
+				</tr>
+				<tr>
+					<td>Option1: </td>
+					<td><input type="text" ng-model="item.option1" /></td>
+				</tr>
+				<tr>
+					<td>Option2: </td>
+					<td><input type="text" ng-model="item.option2" /></td>
+				</tr>
+				<tr>
+					<td>Option3: </td>
+					<td><input type="text" ng-model="item.option3" /></td>
+				</tr>
+				<tr>
+					<td>Option4: </td>
+					<td><input type="text" ng-model="item.option4" /></td>
+				</tr>
+				<tr>
+					<td colspan="2"><input type="Button" value="Add" ng-click="addItem(item)" /> </td>
+					
+				</tr>
+			</table>
+			<pre><textarea name="strjson" ng-value="{{items | json}}" /></pre>
+		</div>
+	
+<script src="Scripts/lib/angular/angular.js"></script>
+<script>
+var app = angular.module("myShoppingList", []); 
+app.controller("myCtrl", function($scope) {
+    $scope.items = [
+			{question: "", option1: "", option2: "",option3:"",option4:""}
+		];
+		
+		$scope.addItem = function(item) {
+			$scope.items.push(item);
+			$scope.item = {};
+		}
+		
+		$scope.removeItem = function(index){
+			$scope.items.splice(index,1);
+		}
+		
+		$scope.showJson = function() {
+    $scope.json = angular.toJson($scope.items);
+}
+});
+</script>
+
+
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<% include ../partials/header.ejs %>
+<% include ../partials/navbar.ejs %>
+<main class="container">
+    
+ <div class="row">
+        <div class="col-md-offset-3 col-md-6">
+            <h1>Create Survey</h1>
+   <form method="post" class="form-horizontal">
+       <div class="form-group">
+           <label for="surveytype" class="col-sm-3 control-label">Survey Type:</label>
+           <div class="col-sm-9">
+<input type="radio" name="group1" id="mcq" value="multiple" checked> Multiple Coice Question
+<input type="radio" name="group1" id="ad" value="agreedisadree" > Agree/Disagree<br>
+           </div>
+</div>
+  <div class="form-group">
+    <label for="surveyname" class="col-sm-3 control-label">Survey Name:</label>
+    <div class="col-sm-9">
+     <input type="text" class="form-control" name="surveyname" id="demo"  placeholder="Survey Name" required autofocus/>
+    </div>
+  </div>
+
+     <div class="form-group text-right">
+                    <a href="/users/multiple">
+                        <input type="button" onclick="myFunction()" class="btn btn-success" value="Create Survey"/>
+                    </a>
+                     
+                    <a href="/users">
+                        <input type="button" class="btn btn-warning" value="Cancel"/>
+                    </a>
+                </div>
+                
+   </form>
+  
+        </div>
+ </div>
+ 
+ 
+
+<script>
+function myFunction() {
+  
+    if(document.getElementById("mcq").checked == true){
+ document.getElementById("demo").value = "multiple";
+}
+else{
+    document.getElementById("demo").innerHTML = "ad";
+    
+}
+   
+}
+</script>
+<% include ../partials/footer.ejs %>
