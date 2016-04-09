@@ -85,6 +85,50 @@ router.post('/agreeadd', function (req, res, next) {
         }
     });
 });
+// GET edit page - show the current user in the form
+router.get('/agreeadd/:id', requireAuth, function (req, res, next) {
+    //res.send('fgfgfgf');
+    var id = req.params.id;
+    Agree.findById(id, function (error, Agree) {
+        if (error) {
+            console.log(error);
+            res.end(error);
+        }
+        else {
+            //show the edit view
+            res.render('multiple/agreeedit', {
+                title: 'User Details',
+                agree: Agree,
+                displayName: req.user ? req.user.displayName : ''
+            });
+        }
+    });
+});
+// POST edit page - update the selected user
+router.post('/agreeadd/:id', requireAuth, function (req, res, next) {
+    // grab the id from the url parameter
+    var id = req.params.id;
+    // create and populate a user object
+    var agree = new Agree({
+        _id: id,
+        displayName: req.body.displayName,
+        surveyName: req.body.surveyname,
+        question: req.body.question,
+        option1: 'Agree',
+        option2: 'Disagree'
+    });
+    // run the update using mongoose and our model
+    Agree.update({ _id: id }, agree, function (error) {
+        if (error) {
+            console.log(error);
+            res.end(error);
+        }
+        else {
+            // if update is successful redirect to the users page
+            res.redirect('/multiple/agreeadd');
+        }
+    });
+});
 /* Render Registration page */
 router.get('/add', function (req, res, next) {
     Mcq.find(function (error, mcq) {
@@ -231,6 +275,21 @@ router.get('/delete/:id', requireAuth, function (req, res, next) {
         else {
             // if removal worked redirect to users page
             res.redirect('/multiple/add');
+        }
+    });
+});
+router.get('/agreedelete/:id', requireAuth, function (req, res, next) {
+    // get the id from the url
+    var id = req.params.id;
+    // use the model and delete this record
+    Agree.remove({ _id: id }, function (error) {
+        if (error) {
+            console.log(error);
+            res.end(error);
+        }
+        else {
+            // if removal worked redirect to users page
+            res.redirect('/multiple/agreeadd');
         }
     });
 });

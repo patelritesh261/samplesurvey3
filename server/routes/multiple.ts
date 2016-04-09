@@ -109,6 +109,58 @@ router.post('/agreeadd', (req:express.Request, res: express.Response, next:any) 
     })
 });
 
+// GET edit page - show the current user in the form
+router.get('/agreeadd/:id', requireAuth, (req: express.Request, res: express.Response, next: any) => {
+//res.send('fgfgfgf');
+    var id = req.params.id;
+
+    Agree.findById(id, (error, Agree) => {
+        if (error) {
+            console.log(error);
+            res.end(error);
+        }
+        else {
+            //show the edit view
+            res.render('multiple/agreeedit', {
+                title: 'User Details',
+                agree: Agree,
+                displayName: req.user ? req.user.displayName : ''
+            });
+        }
+    });
+});
+
+// POST edit page - update the selected user
+router.post('/agreeadd/:id', requireAuth, (req: express.Request, res: express.Response, next: any) => {
+
+    // grab the id from the url parameter
+    var id = req.params.id;
+
+    // create and populate a user object
+    var agree = new Agree({
+        _id: id,
+        displayName:req.body.displayName,
+        surveyName: req.body.surveyname,
+        question: req.body.question,
+        option1: 'Agree',
+         option2: 'Disagree'
+          
+    });
+    
+    
+
+    // run the update using mongoose and our model
+    Agree.update({ _id: id }, agree, (error) => {
+        if (error) {
+            console.log(error);
+            res.end(error);
+        }
+        else {
+            // if update is successful redirect to the users page
+            res.redirect('/multiple/agreeadd');
+        }
+    });
+});
 
 /* Render Registration page */
 router.get('/add', (req:express.Request, res: express.Response, next:any) => {
@@ -282,6 +334,23 @@ router.get('/delete/:id', requireAuth, (req: express.Request, res: express.Respo
 });
 
 
+router.get('/agreedelete/:id', requireAuth, (req: express.Request, res: express.Response, next: any) => {
+
+    // get the id from the url
+    var id = req.params.id;
+
+    // use the model and delete this record
+    Agree.remove({ _id: id }, (error) => {
+        if (error) {
+            console.log(error);
+            res.end(error);
+        }
+        else {
+            // if removal worked redirect to users page
+            res.redirect('/multiple/agreeadd');
+        }
+    });
+});
 
 
 // make this public
