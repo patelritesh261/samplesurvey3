@@ -44,6 +44,7 @@ router.post('/createsurvey', requireAuth, (req: express.Request, res: express.Re
     
             // no error, we found a list of users
           
+<<<<<<< HEAD
                //surveyname=req.body;
                // res.send(surveyname);
                surveyname=req.body.surveyname;
@@ -54,9 +55,62 @@ router.post('/createsurvey', requireAuth, (req: express.Request, res: express.Re
               if(surveytype==="multiple"){
                 res.redirect('/multiple/add');
                 }
+=======
+                
+                surveyname=req.body.surveyname;
+               
+                res.redirect('/multiple/agreeadd');
+>>>>>>> c922798dd7fa7c7001fb5dbb70692a191e9763de
        
     
 });
+/* Render Registration page */
+router.get('/agreeadd', (req:express.Request, res: express.Response, next:any) => {
+    
+        Mcq.find((error, mcq) => {
+        if (error) {
+            console.log(error);
+            res.end(error);
+        }
+        else {
+            // no error, we found a list of users
+            res.render('multiple/agreeadd', {
+                title: 'MCQ Survey',
+                surveyname:surveyname,
+                mcq: mcq,
+               messages: req.flash('registerMessage'),
+            displayName: req.user ? req.user.displayName : ''
+            
+            });
+        }
+    });
+        
+       
+});
+
+/* Process Registration Request */
+router.post('/agreeadd', (req:express.Request, res: express.Response, next:any) => {
+    // attempt to register user
+    Mcq.create({
+        displayName: req.body.displayName,
+        surveyName: req.body.surveyname,
+        question: req.body.question,
+        option1: req.body.option1,
+        option2: req.body.option2,
+        option3: req.body.option3,
+        option4: req.body.option4,
+    }, function(error, User) {
+        // did we get back an error or valid Article object?
+        if (error) {
+            console.log(error);
+            res.end(error);
+        }
+        else {
+            res.redirect('/multiple/add');
+        }
+    })
+});
+
 
 /* Render Registration page */
 router.get('/add', (req:express.Request, res: express.Response, next:any) => {
