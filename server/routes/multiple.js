@@ -4,7 +4,9 @@ var router = express.Router();
 //variable declaration
 var surveyname, surveytype;
 var mcqModel = require('../models/multiple');
+var agreeModel = require('../models/agree');
 var Mcq = mcqModel.Mcq;
+var Agree = agreeModel.Agree;
 /* Utility Function to check if user is authenticated */
 function requireAuth(req, res, next) {
     // check if the user is logged in
@@ -36,18 +38,17 @@ router.post('/createsurvey', requireAuth, function (req, res, next) {
     //surveyname=req.body;
     // res.send(surveyname);
     surveyname = req.body.surveyname;
-<<<<<<< HEAD
     surveytype = req.body.surveytype;
     //res.send(surveytype);
     if (surveytype === "multiple") {
         res.redirect('/multiple/add');
     }
-=======
+    surveyname = req.body.surveyname;
     res.redirect('/multiple/agreeadd');
 });
 /* Render Registration page */
 router.get('/agreeadd', function (req, res, next) {
-    Mcq.find(function (error, mcq) {
+    Agree.find(function (error, agree) {
         if (error) {
             console.log(error);
             res.end(error);
@@ -55,9 +56,9 @@ router.get('/agreeadd', function (req, res, next) {
         else {
             // no error, we found a list of users
             res.render('multiple/agreeadd', {
-                title: 'MCQ Survey',
+                title: 'Agree Survey',
                 surveyname: surveyname,
-                mcq: mcq,
+                agree: agree,
                 messages: req.flash('registerMessage'),
                 displayName: req.user ? req.user.displayName : ''
             });
@@ -67,14 +68,12 @@ router.get('/agreeadd', function (req, res, next) {
 /* Process Registration Request */
 router.post('/agreeadd', function (req, res, next) {
     // attempt to register user
-    Mcq.create({
+    Agree.create({
         displayName: req.body.displayName,
         surveyName: req.body.surveyname,
         question: req.body.question,
-        option1: req.body.option1,
-        option2: req.body.option2,
-        option3: req.body.option3,
-        option4: req.body.option4,
+        option1: 'Agree',
+        option2: 'Disagree',
     }, function (error, User) {
         // did we get back an error or valid Article object?
         if (error) {
@@ -82,10 +81,9 @@ router.post('/agreeadd', function (req, res, next) {
             res.end(error);
         }
         else {
-            res.redirect('/multiple/add');
+            res.redirect('/multiple/agreeadd');
         }
     });
->>>>>>> c922798dd7fa7c7001fb5dbb70692a191e9763de
 });
 /* Render Registration page */
 router.get('/add', function (req, res, next) {

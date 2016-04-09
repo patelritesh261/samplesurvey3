@@ -8,9 +8,10 @@ var surveyname,surveytype;
 // db references
 import mongoose = require('mongoose');
 import mcqModel = require('../models/multiple');
+import agreeModel = require('../models/agree');
 
 import Mcq = mcqModel.Mcq;
-
+import Agree = agreeModel.Agree;
 /* Utility Function to check if user is authenticated */
 function requireAuth(req:express.Request, res:express.Response, next: any) {
     // check if the user is logged in
@@ -44,8 +45,7 @@ router.post('/createsurvey', requireAuth, (req: express.Request, res: express.Re
     
             // no error, we found a list of users
           
-<<<<<<< HEAD
-               //surveyname=req.body;
+   //surveyname=req.body;
                // res.send(surveyname);
                surveyname=req.body.surveyname;
               surveytype=req.body.surveytype;
@@ -55,19 +55,18 @@ router.post('/createsurvey', requireAuth, (req: express.Request, res: express.Re
               if(surveytype==="multiple"){
                 res.redirect('/multiple/add');
                 }
-=======
+
                 
                 surveyname=req.body.surveyname;
                
                 res.redirect('/multiple/agreeadd');
->>>>>>> c922798dd7fa7c7001fb5dbb70692a191e9763de
-       
+
     
 });
 /* Render Registration page */
 router.get('/agreeadd', (req:express.Request, res: express.Response, next:any) => {
     
-        Mcq.find((error, mcq) => {
+        Agree.find((error, agree) => {
         if (error) {
             console.log(error);
             res.end(error);
@@ -75,9 +74,9 @@ router.get('/agreeadd', (req:express.Request, res: express.Response, next:any) =
         else {
             // no error, we found a list of users
             res.render('multiple/agreeadd', {
-                title: 'MCQ Survey',
+                title: 'Agree Survey',
                 surveyname:surveyname,
-                mcq: mcq,
+                agree: agree,
                messages: req.flash('registerMessage'),
             displayName: req.user ? req.user.displayName : ''
             
@@ -91,14 +90,13 @@ router.get('/agreeadd', (req:express.Request, res: express.Response, next:any) =
 /* Process Registration Request */
 router.post('/agreeadd', (req:express.Request, res: express.Response, next:any) => {
     // attempt to register user
-    Mcq.create({
+    Agree.create({
         displayName: req.body.displayName,
         surveyName: req.body.surveyname,
         question: req.body.question,
-        option1: req.body.option1,
-        option2: req.body.option2,
-        option3: req.body.option3,
-        option4: req.body.option4,
+        option1: 'Agree',
+        option2: 'Disagree',
+        
     }, function(error, User) {
         // did we get back an error or valid Article object?
         if (error) {
@@ -106,7 +104,7 @@ router.post('/agreeadd', (req:express.Request, res: express.Response, next:any) 
             res.end(error);
         }
         else {
-            res.redirect('/multiple/add');
+            res.redirect('/multiple/agreeadd');
         }
     })
 });
