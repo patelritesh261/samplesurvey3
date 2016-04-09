@@ -2,7 +2,7 @@
 var express = require('express');
 var router = express.Router();
 //variable declaration
-var surveyname;
+var surveyname, surveytype;
 var mcqModel = require('../models/multiple');
 var Mcq = mcqModel.Mcq;
 /* Utility Function to check if user is authenticated */
@@ -33,7 +33,16 @@ router.get('/createsurvey', requireAuth, function (req, res, next) {
 });
 router.post('/createsurvey', requireAuth, function (req, res, next) {
     // no error, we found a list of users
+    //surveyname=req.body;
+    // res.send(surveyname);
     surveyname = req.body.surveyname;
+<<<<<<< HEAD
+    surveytype = req.body.surveytype;
+    //res.send(surveytype);
+    if (surveytype === "multiple") {
+        res.redirect('/multiple/add');
+    }
+=======
     res.redirect('/multiple/agreeadd');
 });
 /* Render Registration page */
@@ -76,6 +85,7 @@ router.post('/agreeadd', function (req, res, next) {
             res.redirect('/multiple/add');
         }
     });
+>>>>>>> c922798dd7fa7c7001fb5dbb70692a191e9763de
 });
 /* Render Registration page */
 router.get('/add', function (req, res, next) {

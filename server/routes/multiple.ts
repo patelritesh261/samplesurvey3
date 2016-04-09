@@ -4,7 +4,7 @@ var router = express.Router();
 
 
 //variable declaration
-var surveyname;
+var surveyname,surveytype;
 // db references
 import mongoose = require('mongoose');
 import mcqModel = require('../models/multiple');
@@ -44,10 +44,23 @@ router.post('/createsurvey', requireAuth, (req: express.Request, res: express.Re
     
             // no error, we found a list of users
           
+<<<<<<< HEAD
+               //surveyname=req.body;
+               // res.send(surveyname);
+               surveyname=req.body.surveyname;
+              surveytype=req.body.surveytype;
+              
+              //res.send(surveytype);
+             
+              if(surveytype==="multiple"){
+                res.redirect('/multiple/add');
+                }
+=======
                 
                 surveyname=req.body.surveyname;
                
                 res.redirect('/multiple/agreeadd');
+>>>>>>> c922798dd7fa7c7001fb5dbb70692a191e9763de
        
     
 });
