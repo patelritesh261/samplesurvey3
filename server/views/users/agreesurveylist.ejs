@@ -1,0 +1,37 @@
+<% include ../partials/header.ejs %>
+<% include ../partials/navbar.ejs %>
+<main class="container">
+   
+<font color="green"><b><i><h2>Survey</h2></b></i></font>
+   
+ 
+  <div class="row">
+     <table class="table table-inverse">
+   <% for (var i = 0; i < agree.length; i++) {
+    if(agree[i].displayName == displayName  )
+        {
+        if(agree[i].surveyName==surveyname){
+    %>
+  <tbody>
+    <tr>
+     
+      <th colspan="4"><%= agree[i].question %></th>
+      
+    </tr>
+   <tr>
+      <td width="5%">A</td>
+      <td width="45%"><%= agree[i].option1 %></td>
+      <td  width="5%">B</td>
+      <td width="45%"><%= agree[i].option2 %></td>
+      
+    </tr>
+   
+    
+  </tbody>
+   <% }} }  %>
+     </table>
+</div>
+
+   
+</main>
+<% include ../partials/footer.ejs %>

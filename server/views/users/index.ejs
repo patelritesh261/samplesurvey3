@@ -42,7 +42,7 @@
                 </div>
                
                     <div class=" col-md-4">
-                         <font color="green"><b><i><h4>Surveys</h4></b></i></font>
+                         <font color="green"><b><i><h4>MCQ Surveys</h4></b></i></font>
                         <table>
                             <% for (var i = 0; i < mcq.length; i++) {
                             var surveyname=mcq[i];
@@ -56,6 +56,35 @@
                                              <input type="hidden" name="surveyName" value="<%= mcq[i] %>"/>
                                              <input type="hidden" name="displayName" value="<%= displayName %>"/>
                                           <a href="" >  <button type="submit" ><%= mcq[i] %></button></a>
+                                           <!--   <a href="users/add"> <font color="green"><b><i><h5><%= mcq[i] %></h5></b></i></font></a>-->
+                                            </form>
+                                            
+                                       
+                                       
+                                    </td>
+
+                                </tr>
+
+
+
+                                <% } %>
+                        </table>
+                    </div>
+                    <div class=" col-md-4">
+                         <font color="green"><b><i><h4>Agree/Disagree Surveys</h4></b></i></font>
+                        <table>
+                            <% for (var i = 0; i < agree.length; i++) {
+                            var surveyname=agree[i];
+  
+    %>
+
+                                <tr>
+
+                                    <td colspan="3">
+                                        <form action="users/selectsurveyagree" method="post">
+                                             <input type="hidden" name="surveyName" value="<%= agree[i] %>"/>
+                                             <input type="hidden" name="displayName" value="<%= displayName %>"/>
+                                          <a href="" >  <button type="submit" ><%= agree[i] %></button></a>
                                            <!--   <a href="users/add"> <font color="green"><b><i><h5><%= mcq[i] %></h5></b></i></font></a>-->
                                             </form>
                                             

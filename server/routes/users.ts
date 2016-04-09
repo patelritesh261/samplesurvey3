@@ -7,8 +7,10 @@ var ss;
 import mongoose = require('mongoose');
 import userModel = require('../models/user');
 import mcqModel = require('../models/multiple');
+import agreeModel = require('../models/agree');
 import User = userModel.User;
 import Mcq = mcqModel.Mcq;
+import Agree = agreeModel.Agree;
 
 /* Utility Function to check if user is authenticated */
 function requireAuth(req:express.Request, res:express.Response, next: any) {
@@ -37,19 +39,30 @@ router.get('/', requireAuth, (req: express.Request, res: express.Response, next:
                         res.end(error);
                     }
                     else {
+                        
+                         Agree.distinct("surveyName",{displayName:ds},(error, agree) => {
+                    if (error) {
+                        console.log(error);
+                        res.end(error);
+                    }
+                    else {
                             // no error, we found a list of users
                                 res.render('users/index', {
                                 title: 'Users',
                                 users: users,
-                                mcq: mcq,
+                                mcq:mcq,
+                                agree: agree,
                                 displayName: req.user ? req.user.displayName : ''
             });
         }
     });
-            
+                    }                  
+            });
         }
     });
-});
+});        
+        
+    
 
 // GET - show main users page - list all the users
 router.get('/selectsurvey', requireAuth, (req: express.Request, res: express.Response, next: any) => {
@@ -90,6 +103,55 @@ router.post('/selectsurvey', requireAuth, (req: express.Request, res: express.Re
                 title: 'MCQ Survey',
                 surveyname:ss,
                 mcq: mcq,
+            displayName: req.user ? req.user.displayName : ''
+            
+            });
+        }
+    });
+              
+       
+    
+});
+
+// GET - show main users page - list all the users
+router.get('/selectsurveyagree', requireAuth, (req: express.Request, res: express.Response, next: any) => {
+   
+    // use the Users model to query the Users collection
+    Agree.find((error, agree) => {
+        if (error) {
+            console.log(error);
+            res.end(error);
+        }
+        else {
+            // no error, we found a list of users
+            
+            res.render('multiple/createsurvey', {
+                title: 'Agree/Disagree Survey',
+                agree: agree,
+                displayName: req.user ? req.user.displayName : ''
+            });
+        }
+    });
+});
+router.post('/selectsurveyagree', requireAuth, (req: express.Request, res: express.Response, next: any) => {
+   
+    
+            // no error, we found a list of users
+          
+                 // res.redirect('/surveylist');
+                ss=req.body.surveyName;
+         
+          Agree.find((error, agree) => {
+        if (error) {
+            console.log(error);
+            res.end(error);
+        }
+        else {
+            // no error, we found a list of users
+            res.render('users/agreesurveylist', {
+                title: 'Agree/Disagree Survey',
+                surveyname:ss,
+                agree: agree,
             displayName: req.user ? req.user.displayName : ''
             
             });

@@ -5,8 +5,10 @@ var router = express.Router();
 var ss;
 var userModel = require('../models/user');
 var mcqModel = require('../models/multiple');
+var agreeModel = require('../models/agree');
 var User = userModel.User;
 var Mcq = mcqModel.Mcq;
+var Agree = agreeModel.Agree;
 /* Utility Function to check if user is authenticated */
 function requireAuth(req, res, next) {
     // check if the user is logged in
@@ -31,12 +33,21 @@ router.get('/', requireAuth, function (req, res, next) {
                     res.end(error);
                 }
                 else {
-                    // no error, we found a list of users
-                    res.render('users/index', {
-                        title: 'Users',
-                        users: users,
-                        mcq: mcq,
-                        displayName: req.user ? req.user.displayName : ''
+                    Agree.distinct("surveyName", { displayName: ds }, function (error, agree) {
+                        if (error) {
+                            console.log(error);
+                            res.end(error);
+                        }
+                        else {
+                            // no error, we found a list of users
+                            res.render('users/index', {
+                                title: 'Users',
+                                users: users,
+                                mcq: mcq,
+                                agree: agree,
+                                displayName: req.user ? req.user.displayName : ''
+                            });
+                        }
                     });
                 }
             });
@@ -76,6 +87,44 @@ router.post('/selectsurvey', requireAuth, function (req, res, next) {
                 title: 'MCQ Survey',
                 surveyname: ss,
                 mcq: mcq,
+                displayName: req.user ? req.user.displayName : ''
+            });
+        }
+    });
+});
+// GET - show main users page - list all the users
+router.get('/selectsurveyagree', requireAuth, function (req, res, next) {
+    // use the Users model to query the Users collection
+    Agree.find(function (error, agree) {
+        if (error) {
+            console.log(error);
+            res.end(error);
+        }
+        else {
+            // no error, we found a list of users
+            res.render('multiple/createsurvey', {
+                title: 'Agree/Disagree Survey',
+                agree: agree,
+                displayName: req.user ? req.user.displayName : ''
+            });
+        }
+    });
+});
+router.post('/selectsurveyagree', requireAuth, function (req, res, next) {
+    // no error, we found a list of users
+    // res.redirect('/surveylist');
+    ss = req.body.surveyName;
+    Agree.find(function (error, agree) {
+        if (error) {
+            console.log(error);
+            res.end(error);
+        }
+        else {
+            // no error, we found a list of users
+            res.render('users/agreesurveylist', {
+                title: 'Agree/Disagree Survey',
+                surveyname: ss,
+                agree: agree,
                 displayName: req.user ? req.user.displayName : ''
             });
         }
