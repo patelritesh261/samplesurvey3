@@ -1,6 +1,8 @@
 "use strict";
 var express = require('express');
 var router = express.Router();
+//variable declaration
+var surveyname;
 var mcqModel = require('../models/multiple');
 var Mcq = mcqModel.Mcq;
 /* Utility Function to check if user is authenticated */
@@ -12,7 +14,7 @@ function requireAuth(req, res, next) {
     next();
 }
 // GET - show main users page - list all the users
-router.get('/', requireAuth, function (req, res, next) {
+router.get('/createsurvey', requireAuth, function (req, res, next) {
     // use the Users model to query the Users collection
     Mcq.find(function (error, mcq) {
         if (error) {
@@ -21,13 +23,18 @@ router.get('/', requireAuth, function (req, res, next) {
         }
         else {
             // no error, we found a list of users
-            res.render('multiple/index', {
+            res.render('multiple/createsurvey', {
                 title: 'MCQ Survey',
                 mcq: mcq,
                 displayName: req.user ? req.user.displayName : ''
             });
         }
     });
+});
+router.post('/createsurvey', requireAuth, function (req, res, next) {
+    // no error, we found a list of users
+    surveyname = req.body.surveyname;
+    res.redirect('/multiple/add');
 });
 /* Render Registration page */
 router.get('/add', function (req, res, next) {
@@ -40,6 +47,7 @@ router.get('/add', function (req, res, next) {
             // no error, we found a list of users
             res.render('multiple/add', {
                 title: 'MCQ Survey',
+                surveyname: surveyname,
                 mcq: mcq,
                 messages: req.flash('registerMessage'),
                 displayName: req.user ? req.user.displayName : ''
@@ -52,6 +60,7 @@ router.post('/add', function (req, res, next) {
     // attempt to register user
     Mcq.create({
         displayName: req.body.displayName,
+        surveyName: req.body.surveyname,
         question: req.body.question,
         option1: req.body.option1,
         option2: req.body.option2,
@@ -64,7 +73,7 @@ router.post('/add', function (req, res, next) {
             res.end(error);
         }
         else {
-            res.redirect('/multiple');
+            res.redirect('/multiple/add');
         }
     });
 });
@@ -120,6 +129,7 @@ router.post('/add/:id', requireAuth, function (req, res, next) {
     var mcq = new Mcq({
         _id: id,
         displayName: req.body.displayName,
+        surveyName: req.body.surveyname,
         question: req.body.question,
         option1: req.body.option1,
         option2: req.body.option2,

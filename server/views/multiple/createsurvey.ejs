@@ -3,28 +3,39 @@
 <main class="container">
     
  <div class="row">
-        <div class="col-md-offset-3 col-md-6">
-            <h1>Create Survey</h1>
+        <div class="col-md-offset-2 col-md-9">
+           
+             <font color="green"><b><i><h2>Create Survey</h2></b></i></font>
    <form method="post" class="form-horizontal">
        <div class="form-group">
-           <label for="surveytype" class="col-sm-3 control-label">Survey Type:</label>
-           <div class="col-sm-9">
-<input type="radio" name="group1" id="mcq" value="multiple" checked> Multiple Coice Question
-<input type="radio" name="group1" id="ad" value="agreedisadree" > Agree/Disagree<br>
+           <label for="surveytype" class="col-sm-2 control-label">Survey Type:</label>
+           <div class="col-sm-1">
+<input type="radio" name="group1" id="mcq" value="multiple" checked></div><div class="col-sm-3"> Multiple Coice Question
+           </div>
+            <div class="col-sm-1">
+<input type="radio" name="group1" id="ad" value="agreedisadree" ></div><div class="col-sm-3"> Agree/Disagree<br>
            </div>
 </div>
   <div class="form-group">
-    <label for="surveyname" class="col-sm-3 control-label">Survey Name:</label>
-    <div class="col-sm-9">
-     <input type="text" class="form-control" name="surveyname" id="demo"  placeholder="Survey Name" required autofocus/>
+    <label for="surveyname" class="col-sm-2 control-label">Survey Name:</label>
+    <div class="col-sm-7">
+     <input type="text" class="form-control" name="surveyname"   placeholder="Survey Name" required autofocus/>
+    </div>
+  </div>
+  <div class="form-group">
+   
+    <div class="col-sm-7">
+     <input type="hidden" class="form-control" name="surveytype" id="demo"  placeholder="Survey Name" value="mcq" />
     </div>
   </div>
 
      <div class="form-group text-right">
-                    <a href="/users/multiple">
-                        <input type="button" onclick="myFunction()" class="btn btn-success" value="Create Survey"/>
-                    </a>
-                     
+         <div class="col-md-3 col-md-offset-3">
+                    
+                        <input type="submit" onclick="myFunction()" class="btn btn-success" value="Create Survey"/>
+                   
+         </div>
+          <div class="col-md-3 ">
                     <a href="/users">
                         <input type="button" class="btn btn-warning" value="Cancel"/>
                     </a>
@@ -44,7 +55,7 @@ function myFunction() {
  document.getElementById("demo").value = "multiple";
 }
 else{
-    document.getElementById("demo").innerHTML = "ad";
+    document.getElementById("demo").value = "ad";
     
 }
    

@@ -38,6 +38,12 @@ var mcqSchema = new mongoose.Schema({
         trim: true,
         required: 'Display Name is required'
     },
+    surveyName: {
+        type: String,
+        default: '',
+        trim: true,
+        required: 'Survey Name is required'
+    },
     created: {
         type: Date,
         default: Date.now

@@ -2,6 +2,9 @@ import express = require('express');
 import passport = require('passport');
 var router = express.Router();
 
+
+//variable declaration
+var surveyname;
 // db references
 import mongoose = require('mongoose');
 import mcqModel = require('../models/multiple');
@@ -18,7 +21,7 @@ function requireAuth(req:express.Request, res:express.Response, next: any) {
 }
 
 // GET - show main users page - list all the users
-router.get('/', requireAuth, (req: express.Request, res: express.Response, next: any) => {
+router.get('/createsurvey', requireAuth, (req: express.Request, res: express.Response, next: any) => {
    
     // use the Users model to query the Users collection
     Mcq.find((error, mcq) => {
@@ -28,13 +31,25 @@ router.get('/', requireAuth, (req: express.Request, res: express.Response, next:
         }
         else {
             // no error, we found a list of users
-            res.render('multiple/index', {
+            res.render('multiple/createsurvey', {
                 title: 'MCQ Survey',
                 mcq: mcq,
                 displayName: req.user ? req.user.displayName : ''
             });
         }
     });
+});
+router.post('/createsurvey', requireAuth, (req: express.Request, res: express.Response, next: any) => {
+   
+    
+            // no error, we found a list of users
+          
+                
+                surveyname=req.body.surveyname;
+               
+                res.redirect('/multiple/add');
+       
+    
 });
 
 /* Render Registration page */
@@ -48,9 +63,11 @@ router.get('/add', (req:express.Request, res: express.Response, next:any) => {
             // no error, we found a list of users
             res.render('multiple/add', {
                 title: 'MCQ Survey',
+                surveyname:surveyname,
                 mcq: mcq,
                messages: req.flash('registerMessage'),
             displayName: req.user ? req.user.displayName : ''
+            
             });
         }
     });
@@ -63,6 +80,7 @@ router.post('/add', (req:express.Request, res: express.Response, next:any) => {
     // attempt to register user
     Mcq.create({
         displayName: req.body.displayName,
+        surveyName: req.body.surveyname,
         question: req.body.question,
         option1: req.body.option1,
         option2: req.body.option2,
@@ -75,7 +93,7 @@ router.post('/add', (req:express.Request, res: express.Response, next:any) => {
             res.end(error);
         }
         else {
-            res.redirect('/multiple');
+            res.redirect('/multiple/add');
         }
     })
 });
@@ -139,6 +157,7 @@ router.post('/add/:id', requireAuth, (req: express.Request, res: express.Respons
     var mcq = new Mcq({
         _id: id,
         displayName:req.body.displayName,
+        surveyName: req.body.surveyname,
         question: req.body.question,
         option1: req.body.option1,
          option2: req.body.option2,
@@ -179,6 +198,8 @@ router.get('/delete/:id', requireAuth, (req: express.Request, res: express.Respo
         }
     });
 });
+
+
 
 
 // make this public
