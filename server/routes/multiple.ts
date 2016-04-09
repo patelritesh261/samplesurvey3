@@ -181,6 +181,29 @@ router.post('/add/:id', requireAuth, (req: express.Request, res: express.Respons
     });
 });
 
+// GET edit page - show the current user in the form
+router.get('/surveyname/', requireAuth, (req: express.Request, res: express.Response, next: any) => {
+res.send('Error');
+    /*var id = req.params.id;
+
+   var ds=req.user.displayName ;
+   Mcq.find(Mcq,{displayName:ds},{surveyName:id},(error, mcq) => {
+        if (error) {
+            console.log(error);
+            res.end(error);
+        }
+        else {
+            //show the edit view
+            res.render('multiple/', {
+                title: 'User Details',
+                mcq: Mcq,
+                displayName: req.user ? req.user.displayName : ''
+            });
+        }
+    });*/
+});
+
+
 // GET delete user
 router.get('/delete/:id', requireAuth, (req: express.Request, res: express.Response, next: any) => {
 
@@ -201,30 +224,7 @@ router.get('/delete/:id', requireAuth, (req: express.Request, res: express.Respo
 });
 
 
-/* Render Registration page */
-router.get('/', (req:express.Request, res: express.Response, next:any) => {
-   
-    var ds=req.user.displayName ;
-         Mcq.distinct("surveyName",{displayName:ds},(error, mcq) => {
-        if (error) {
-            console.log(error);
-            res.end(error);
-        }
-        else {
-            // no error, we found a list of users
-            res.render('multiple/', {
-                title: 'MCQ Survey',
-                surveyname:surveyname,
-                mcq: mcq,
-               messages: req.flash('registerMessage'),
-            displayName: req.user ? req.user.displayName : ''
-            
-            });
-        }
-    });
-        
-       
-});
+
 
 // make this public
 module.exports = router;

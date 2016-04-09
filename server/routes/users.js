@@ -1,7 +1,8 @@
 "use strict";
 var express = require('express');
-var passport = require('passport');
 var router = express.Router();
+//variable declaration
+var ss;
 var userModel = require('../models/user');
 var mcqModel = require('../models/multiple');
 var User = userModel.User;
@@ -42,38 +43,45 @@ router.get('/', requireAuth, function (req, res, next) {
         }
     });
 });
-/* Render Registration page */
-router.get('/add', function (req, res, next) {
-    res.render('users/add', {
-        title: 'Register',
-        messages: req.flash('registerMessage'),
-        displayName: req.user ? req.user.displayName : ''
-    });
-});
-/* Process Registration Request */
-router.post('/add', function (req, res, next) {
-    // attempt to register user
-    User.register(new User({ username: req.body.username,
-        password: req.body.password,
-        email: req.body.email,
-        displayName: req.body.displayName
-    }), req.body.password, function (err) {
-        if (err) {
-            console.log('Error Inserting New Data');
-            if (err.name == 'UserExistsError') {
-                req.flash('registerMessage', 'Registration Error: User Already Exists!');
-            }
-            return res.render('users/add', {
-                title: 'Register',
-                messages: req.flash('registerMessage'),
+// GET - show main users page - list all the users
+router.get('/selectsurvey', requireAuth, function (req, res, next) {
+    // use the Users model to query the Users collection
+    Mcq.find(function (error, mcq) {
+        if (error) {
+            console.log(error);
+            res.end(error);
+        }
+        else {
+            // no error, we found a list of users
+            res.render('multiple/createsurvey', {
+                title: 'MCQ Survey',
+                mcq: mcq,
                 displayName: req.user ? req.user.displayName : ''
             });
         }
-        // if registration is successful
-        return passport.authenticate('local')(req, res, function () {
-            res.redirect('/users');
-        });
     });
+});
+router.post('/selectsurvey', requireAuth, function (req, res, next) {
+    // no error, we found a list of users
+    ss = req.body;
+    res.send(ss);
+    res.redirect('/multiple/');
+});
+/* Render Registration page */
+router.get('/add', function (req, res, next) {
+    //  var ss=req.body.surveyName;
+    //  res.send('send'+ss);
+    // res.redirect('/multiple/createsurvey');
+    /*  res.render('users/add', {
+          title: 'Register',
+          messages: req.flash('registerMessage'),
+          displayName: req.user ? req.user.displayName : ''
+      });*/
+});
+/* Process Registration Request */
+router.post('/add', requireAuth, function (req, res, next) {
+    ss = req.body.surveyName;
+    res.redirect('/users/surveylist');
 });
 // GET add page - show the blank form
 /*router.get('/add', requireAuth, (req: express.Request, res: express.Response, next: any) => {
@@ -156,6 +164,25 @@ router.get('/delete/:id', requireAuth, function (req, res, next) {
         else {
             // if removal worked redirect to users page
             res.redirect('/users');
+        }
+    });
+});
+// GET edit page - show the current user in the form
+/* Render Registration page */
+router.get('/surveylist', requireAuth, function (req, res, next) {
+    Mcq.find(function (error, mcq) {
+        if (error) {
+            console.log(error);
+            res.end(error);
+        }
+        else {
+            // no error, we found a list of users
+            res.render('users/surveylist', {
+                title: 'MCQ Survey',
+                surveyname: ss,
+                mcq: mcq,
+                displayName: req.user ? req.user.displayName : ''
+            });
         }
     });
 });

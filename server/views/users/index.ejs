@@ -1,45 +1,74 @@
 <% include ../partials/header.ejs %>
-<% include ../partials/navbar.ejs %>
-<main class="container">
-    <h1></h1>
-<font color="green"><b><i><h2>Users</h2></b></i></font>
-    
-<font color="green"><b><i><p><a href="/users/add">Add a New User</a></p></b></i></font>
-    <ul class="list-group">
-        <% for (var i = 0; i < users.length; i++) { 
+    <% include ../partials/navbar.ejs %>
+        <main class="container">
+            <h1></h1>
+            <font color="green"><b><i><h2> Dashboard</h2></b></i></font>
+
+           
+            <div class="row">
+                <div class="col-md-5">
+                    <font color="green"><b><i><h4>Info</h4></b></i></font>
+                     <table>
+                        <% for (var i = 0; i < users.length; i++) { 
         if(users[i].displayName == displayName)
         {
         %>
-            <li class="list-group-item">
-                username: 
-                <a href="/users/<%= users[i]._id %>" title="Edit User">
-                    <%= users[i].username %>
-                </a>
-                <br />
-                password: <%= users[i].password %>
-                <br />
-                email: <%= users[i].email %>
-                <br />
-                Display Name: <%= users[i].displayName %>
-                <br />
-                Created: <%= users[i].created.toDateString() %>
-                <br />
-                Updated: <%= users[i].updated.toDateString() %>
-            </li>
-        <% } }%>
-    </ul>
-    <ul class="list-group">
-        <% for (var i = 0; i < mcq.length; i++) { 
-       
-        %>
-            <li class="list-group-item">
-                username: 
-                <a href="/users/<%= users[i]._id %>" title="Edit User">
-                    <%= mcq[i] %>
-                </a>
-                
-            </li>
-        <%  }%>
-    </ul>
-</main>
-<% include ../partials/footer.ejs %>
+                            <tr>
+                               <th> username:</th>
+                               <td>
+                                <a href="/users/<%= users[i]._id %>" title="Edit User">
+                                    <%= users[i].username %>
+                                </a>
+                                </td>
+                                </tr>
+                                <tr>
+                                <th> password:</th>
+                                <td><%= users[i].password %>
+                               </td>
+                               </tr>
+                               
+                                   <tr>
+                                       <th> email:</th><td>
+                                    <%= users[i].email %></td></tr>
+                                    
+                                       <tr><th>Display Name:</th>
+                                       <td>
+                                        <%= users[i].displayName %></td>
+                                        </tr>
+                                        
+                     </table>
+                            <% } }%>
+                    </ul>
+                </div>
+               
+                    <div class=" col-md-4">
+                         <font color="green"><b><i><h4>Surveys</h4></b></i></font>
+                        <table>
+                            <% for (var i = 0; i < mcq.length; i++) {
+                            var surveyname=mcq[i];
+  
+    %>
+
+                                <tr>
+
+                                    <td colspan="3">
+                                        <form action="users/selectsurvey" method="post">
+                                             <input type="hidden" name="surveyName" value="<%= mcq[i] %>"/>
+                                          <a href="" >  <button type="submit" ><%= mcq[i] %></button></a>
+                                           <!--   <a href="users/add"> <font color="green"><b><i><h5><%= mcq[i] %></h5></b></i></font></a>-->
+                                            </form>
+                                            
+                                       
+                                       
+                                    </td>
+
+                                </tr>
+
+
+
+                                <% } %>
+                        </table>
+                    </div>
+                </div>
+        </main>
+        <% include ../partials/footer.ejs %>

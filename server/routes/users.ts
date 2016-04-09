@@ -1,7 +1,8 @@
 import express = require('express');
 import passport = require('passport');
 var router = express.Router();
-
+//variable declaration
+var ss;
 // db references
 import mongoose = require('mongoose');
 import userModel = require('../models/user');
@@ -50,42 +51,57 @@ router.get('/', requireAuth, (req: express.Request, res: express.Response, next:
     });
 });
 
+// GET - show main users page - list all the users
+router.get('/selectsurvey', requireAuth, (req: express.Request, res: express.Response, next: any) => {
+   
+    // use the Users model to query the Users collection
+    Mcq.find((error, mcq) => {
+        if (error) {
+            console.log(error);
+            res.end(error);
+        }
+        else {
+            // no error, we found a list of users
+            
+            res.render('multiple/createsurvey', {
+                title: 'MCQ Survey',
+                mcq: mcq,
+                displayName: req.user ? req.user.displayName : ''
+            });
+        }
+    });
+});
+router.post('/selectsurvey', requireAuth, (req: express.Request, res: express.Response, next: any) => {
+   
+    
+            // no error, we found a list of users
+          
+                
+                ss=req.body;
+           res.send(ss);
+                res.redirect('/multiple/');
+       
+    
+});
+
 /* Render Registration page */
 router.get('/add', (req:express.Request, res: express.Response, next:any) => {
-   
-        res.render('users/add', {
+  //  var ss=req.body.surveyName;
+  //  res.send('send'+ss);
+  // res.redirect('/multiple/createsurvey');
+      /*  res.render('users/add', {
             title: 'Register',
             messages: req.flash('registerMessage'),
             displayName: req.user ? req.user.displayName : ''
-        });
+        });*/
        
 });
 
 /* Process Registration Request */
-router.post('/add', (req:express.Request, res: express.Response, next:any) => {
-    // attempt to register user
-    User.register(new User(
-       { username: req.body.username,
-         password: req.body.password,
-         email: req.body.email,
-         displayName: req.body.displayName
-       }), req.body.password, (err) => {
-           if(err) {
-               console.log('Error Inserting New Data');
-               if(err.name == 'UserExistsError') {
-               req.flash('registerMessage', 'Registration Error: User Already Exists!');
-               }
-               return res.render('users/add', {
-                    title: 'Register',
-                    messages: req.flash('registerMessage'),
-                    displayName: req.user ? req.user.displayName : ''
-                });
-           }
-           // if registration is successful
-           return passport.authenticate('local')(req, res, ()=>{
-              res.redirect('/users'); 
-           });
-       });
+router.post('/add', requireAuth,(req:express.Request, res: express.Response, next:any) => {
+    
+     ss=req.body.surveyName;
+    res.redirect('/users/surveylist');
 });
 
 
@@ -186,6 +202,27 @@ router.get('/delete/:id', requireAuth, (req: express.Request, res: express.Respo
     });
 });
 
+// GET edit page - show the current user in the form
+/* Render Registration page */
+router.get('/surveylist',requireAuth, (req:express.Request, res: express.Response, next:any) => {
 
+      Mcq.find((error, mcq) => {
+        if (error) {
+            console.log(error);
+            res.end(error);
+        }
+        else {
+            // no error, we found a list of users
+            res.render('users/surveylist', {
+                title: 'MCQ Survey',
+                surveyname:ss,
+                mcq: mcq,
+            displayName: req.user ? req.user.displayName : ''
+            
+            });
+        }
+    });
+       
+});
 // make this public
 module.exports = router;

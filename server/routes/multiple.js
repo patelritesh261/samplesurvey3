@@ -148,6 +148,27 @@ router.post('/add/:id', requireAuth, function (req, res, next) {
         }
     });
 });
+// GET edit page - show the current user in the form
+router.get('/surveyname/', requireAuth, function (req, res, next) {
+    res.send('Error');
+    /*var id = req.params.id;
+
+   var ds=req.user.displayName ;
+   Mcq.find(Mcq,{displayName:ds},{surveyName:id},(error, mcq) => {
+        if (error) {
+            console.log(error);
+            res.end(error);
+        }
+        else {
+            //show the edit view
+            res.render('multiple/', {
+                title: 'User Details',
+                mcq: Mcq,
+                displayName: req.user ? req.user.displayName : ''
+            });
+        }
+    });*/
+});
 // GET delete user
 router.get('/delete/:id', requireAuth, function (req, res, next) {
     // get the id from the url
@@ -161,26 +182,6 @@ router.get('/delete/:id', requireAuth, function (req, res, next) {
         else {
             // if removal worked redirect to users page
             res.redirect('/multiple/add');
-        }
-    });
-});
-/* Render Registration page */
-router.get('/', function (req, res, next) {
-    var ds = req.user.displayName;
-    Mcq.distinct("surveyName", { displayName: ds }, function (error, mcq) {
-        if (error) {
-            console.log(error);
-            res.end(error);
-        }
-        else {
-            // no error, we found a list of users
-            res.render('multiple/', {
-                title: 'MCQ Survey',
-                surveyname: surveyname,
-                mcq: mcq,
-                messages: req.flash('registerMessage'),
-                displayName: req.user ? req.user.displayName : ''
-            });
         }
     });
 });
