@@ -63,9 +63,23 @@ router.get('/selectsurvey', requireAuth, function (req, res, next) {
 });
 router.post('/selectsurvey', requireAuth, function (req, res, next) {
     // no error, we found a list of users
-    ss = req.body;
-    res.send(ss);
-    res.redirect('/multiple/');
+    // res.redirect('/surveylist');
+    ss = req.body.surveyName;
+    Mcq.find(function (error, mcq) {
+        if (error) {
+            console.log(error);
+            res.end(error);
+        }
+        else {
+            // no error, we found a list of users
+            res.render('users/surveylist', {
+                title: 'MCQ Survey',
+                surveyname: ss,
+                mcq: mcq,
+                displayName: req.user ? req.user.displayName : ''
+            });
+        }
+    });
 });
 /* Render Registration page */
 router.get('/add', function (req, res, next) {
@@ -179,7 +193,7 @@ router.get('/surveylist', requireAuth, function (req, res, next) {
             // no error, we found a list of users
             res.render('users/surveylist', {
                 title: 'MCQ Survey',
-                surveyname: ss,
+                //surveyname:ss,
                 mcq: mcq,
                 displayName: req.user ? req.user.displayName : ''
             });
