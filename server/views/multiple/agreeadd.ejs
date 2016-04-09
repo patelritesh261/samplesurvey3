@@ -44,27 +44,34 @@
     </div>
   <div class="row">
      <table class="table table-inverse">
-   <% for (var i = 0; i < mcq.length; i++) {
-    if(mcq[i].displayName == displayName  )
+   <% for (var i = 0; i < agree.length; i++) {
+    if(agree[i].displayName == displayName  )
         {
-        if(mcq[i].surveyName==surveyname){
+        if(agree[i].surveyName==surveyname){
     %>
   <tbody>
     <tr>
      
-      <th colspan="7"><%= mcq[i].question %></th>
+      <th colspan="7"><%= agree[i].question %></th>
       <th>
           <div class="col-md-5 ">
-           <a  href="/multiple/add/<%= mcq[i]._id %>" title="Delete" >
+           <a  href="/multiple/agreeadd/<%= agree[i]._id %>" title="Delete" >
                         <button type="button" class="btn btn-success">Edit</button>
                     </a>
           </div>
           <div class="col-md-4">
-          <a href="/multiple/delete/<%= mcq[i]._id %>" title="Delete" onclick="return confirm('Are you sure you want to delete this?');">
+          <a href="/multiple/agreedelete/<%= agree[i]._id %>" title="Delete" onclick="return confirm('Are you sure you want to delete this?');">
                         <button type="button" class="btn btn-danger">Delete</button>
                     </a>
           </div>
       </th>
+    </tr>
+   <tr>
+      <td width="5%">A</td>
+      <td width="20%"><%= agree[i].option1 %></td>
+      <td  width="5%">B</td>
+      <td width="20%"><%= agree[i].option2 %></td>
+      
     </tr>
    
     
