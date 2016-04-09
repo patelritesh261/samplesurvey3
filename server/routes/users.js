@@ -3,7 +3,9 @@ var express = require('express');
 var passport = require('passport');
 var router = express.Router();
 var userModel = require('../models/user');
+var mcqModel = require('../models/multiple');
 var User = userModel.User;
+var Mcq = mcqModel.Mcq;
 /* Utility Function to check if user is authenticated */
 function requireAuth(req, res, next) {
     // check if the user is logged in
@@ -21,11 +23,21 @@ router.get('/', requireAuth, function (req, res, next) {
             res.end(error);
         }
         else {
-            // no error, we found a list of users
-            res.render('users/index', {
-                title: 'Users',
-                users: users,
-                displayName: req.user ? req.user.displayName : ''
+            var ds = req.user.displayName;
+            Mcq.distinct("surveyName", { displayName: ds }, function (error, mcq) {
+                if (error) {
+                    console.log(error);
+                    res.end(error);
+                }
+                else {
+                    // no error, we found a list of users
+                    res.render('users/index', {
+                        title: 'Users',
+                        users: users,
+                        mcq: mcq,
+                        displayName: req.user ? req.user.displayName : ''
+                    });
+                }
             });
         }
     });

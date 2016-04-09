@@ -76,12 +76,16 @@
     </div>
   <div class="row">
      <table class="table table-inverse">
-   <% for (var i = 0; i < mcq.length; i++) { %>
+   <% for (var i = 0; i < mcq.length; i++) {
+    if(mcq[i].displayName == displayName  )
+        {
+        if(mcq[i].surveyName==surveyname){
+    %>
   <tbody>
     <tr>
      
-      <td colspan="7"><%= mcq[i].question %></td>
-      <td>
+      <th colspan="7"><%= mcq[i].question %></th>
+      <th>
           <div class="col-md-5 ">
            <a  href="/multiple/add/<%= mcq[i]._id %>" title="Delete" >
                         <button type="button" class="btn btn-success">Edit</button>
@@ -92,7 +96,7 @@
                         <button type="button" class="btn btn-danger">Delete</button>
                     </a>
           </div>
-      </td>
+      </th>
     </tr>
     <tr>
       <td width="5%">A</td>
@@ -107,7 +111,7 @@
    
     
   </tbody>
-   <% } %>
+   <% }} }  %>
      </table>
 </div>
 </main>

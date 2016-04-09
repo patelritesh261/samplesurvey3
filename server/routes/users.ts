@@ -5,8 +5,9 @@ var router = express.Router();
 // db references
 import mongoose = require('mongoose');
 import userModel = require('../models/user');
-
+import mcqModel = require('../models/multiple');
 import User = userModel.User;
+import Mcq = mcqModel.Mcq;
 
 /* Utility Function to check if user is authenticated */
 function requireAuth(req:express.Request, res:express.Response, next: any) {
@@ -27,12 +28,24 @@ router.get('/', requireAuth, (req: express.Request, res: express.Response, next:
             res.end(error);
         }
         else {
-            // no error, we found a list of users
-            res.render('users/index', {
-                title: 'Users',
-                users: users,
-                displayName: req.user ? req.user.displayName : ''
+            
+                var ds=req.user.displayName ;
+                Mcq.distinct("surveyName",{displayName:ds},(error, mcq) => {
+                    if (error) {
+                        console.log(error);
+                        res.end(error);
+                    }
+                    else {
+                            // no error, we found a list of users
+                                res.render('users/index', {
+                                title: 'Users',
+                                users: users,
+                                mcq: mcq,
+                                displayName: req.user ? req.user.displayName : ''
             });
+        }
+    });
+            
         }
     });
 });

@@ -5,60 +5,22 @@
 <font color="green"><b><i><h2>Survey</h2></b></i></font>
     <a href="/multiple/add">Create New Survey</a>
  
-   <table class="table table-inverse">
-   <% for (var i = 0; i < mcq.length; i++) { %>
-  <tbody>
+   <table>
+   <% for (var i = 0; i < mcq.length; i++) {
+  
+    %>
+ 
     <tr>
      
-      <td colspan="3"><%= mcq[i].question %></td>
-      <td>
-           <a  href="/multiple/<%= mcq[i]._id %>" title="Delete" onclick="return confirm('Are you sure you want to delete this?');">
-                        <button type="button" class="btn btn-danger">Edit</button>
-                    </a>
-     
-          <a href="/multiple/delete/<%= mcq[i]._id %>" title="Delete" onclick="return confirm('Are you sure you want to delete this?');">
-                        <button type="button" class="btn btn-danger">Delete</button>
-                    </a>
-      </td>
-    </tr>
-    <tr>
-      <td width="5%">A</td>
-      <td width="45%"><%= mcq[i].option1 %></td>
-      <td  width="5%">C</td>
-      <td width="45%"><%= mcq[i].option3 %></td>
-    </tr>
-    <tr>
-      <td width="5%">B</td>
-      <td width="45%"><%= mcq[i].option2 %></td>
-      <td  width="5%">C</td>
-      <td width="45%"><%= mcq[i].option4 %></td>
+      <td colspan="3"><a href=""> <font color="green"><b><i><h5><%= mcq[i] %></h5></b></i></font></a></td>
+      
     </tr>
     
-  </tbody>
+    
+ 
    <% } %>
 </table>
 
-    <ul class="list-group">
-        <% for (var i = 0; i < mcq.length; i++) { %>
-            <li class="list-group-item">
-                Question: 
-                <a href="/multiple/<%= mcq[i]._id %>" title="Edit Question">
-                    <%= mcq[i].question %>
-                </a>
-                <br />
-                Option 1: <%= mcq[i].option1 %>
-                <br />
-                Option 2: <%= mcq[i].option2 %>
-                <br />
-                Option 3: <%= mcq[i].option3 %>
-                <br />
-                Option 4: <%= mcq[i].option4 %>
-                <br />
-                Created: <%= mcq[i].created.toDateString() %>
-                <br />
-                Updated: <%= mcq[i].updated.toDateString() %>
-            </li>
-        <% } %>
-    </ul>
+   
 </main>
 <% include ../partials/footer.ejs %>

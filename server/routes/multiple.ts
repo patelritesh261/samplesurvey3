@@ -54,6 +54,7 @@ router.post('/createsurvey', requireAuth, (req: express.Request, res: express.Re
 
 /* Render Registration page */
 router.get('/add', (req:express.Request, res: express.Response, next:any) => {
+    
         Mcq.find((error, mcq) => {
         if (error) {
             console.log(error);
@@ -200,7 +201,30 @@ router.get('/delete/:id', requireAuth, (req: express.Request, res: express.Respo
 });
 
 
-
+/* Render Registration page */
+router.get('/', (req:express.Request, res: express.Response, next:any) => {
+   
+    var ds=req.user.displayName ;
+         Mcq.distinct("surveyName",{displayName:ds},(error, mcq) => {
+        if (error) {
+            console.log(error);
+            res.end(error);
+        }
+        else {
+            // no error, we found a list of users
+            res.render('multiple/', {
+                title: 'MCQ Survey',
+                surveyname:surveyname,
+                mcq: mcq,
+               messages: req.flash('registerMessage'),
+            displayName: req.user ? req.user.displayName : ''
+            
+            });
+        }
+    });
+        
+       
+});
 
 // make this public
 module.exports = router;

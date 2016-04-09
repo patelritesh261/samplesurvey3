@@ -164,6 +164,26 @@ router.get('/delete/:id', requireAuth, function (req, res, next) {
         }
     });
 });
+/* Render Registration page */
+router.get('/', function (req, res, next) {
+    var ds = req.user.displayName;
+    Mcq.distinct("surveyName", { displayName: ds }, function (error, mcq) {
+        if (error) {
+            console.log(error);
+            res.end(error);
+        }
+        else {
+            // no error, we found a list of users
+            res.render('multiple/', {
+                title: 'MCQ Survey',
+                surveyname: surveyname,
+                mcq: mcq,
+                messages: req.flash('registerMessage'),
+                displayName: req.user ? req.user.displayName : ''
+            });
+        }
+    });
+});
 // make this public
 module.exports = router;
 

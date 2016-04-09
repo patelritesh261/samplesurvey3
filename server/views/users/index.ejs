@@ -28,5 +28,18 @@
             </li>
         <% } }%>
     </ul>
+    <ul class="list-group">
+        <% for (var i = 0; i < mcq.length; i++) { 
+       
+        %>
+            <li class="list-group-item">
+                username: 
+                <a href="/users/<%= users[i]._id %>" title="Edit User">
+                    <%= mcq[i] %>
+                </a>
+                
+            </li>
+        <%  }%>
+    </ul>
 </main>
 <% include ../partials/footer.ejs %>
