@@ -116,5 +116,8 @@ app.use((error: CustomError, req: express.Request, res: express.Response, next: 
     });
 });
 
+app.get('/about',function showDiv() {
+   document.getElementById('welcomeDiv').style.display = "block";
+});
 
 module.exports = app;
