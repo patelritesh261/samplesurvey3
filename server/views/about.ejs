@@ -14,7 +14,7 @@
                   P&P Limited is a creative web developers team and we love what we do. Our goal is to create conceptually interesting and visually stunning websites
                 </p><!-- /.description -->
                 <div class="btn-container">
-                  <a href="#" class="btn read-more" onclick="showDiv()">Know more about our team members.</a>
+                  <input type="button" class="btn read-more" value = "Know more about our team members." onclick="showDiv()"/>
                   <div id="text"  style="display:none;" class="answer_list" > WELCOME</div>
                 </div><!-- /.btn-container -->
               </div><!-- /.know-about-us -->
@@ -43,7 +43,11 @@
       </div><!-- /.section-padding -->
     </div><!-- /.about-top -->
 
-    
+    <script>
+    function showDiv() {
+   document.getElementById('welcomeDiv').style.display = "block";
+}
+    </script>
 
 <% include partials/footer.ejs %>
     

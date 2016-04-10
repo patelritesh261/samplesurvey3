@@ -90,9 +90,6 @@ app.use(function (error, req, res, next) {
         error: {}
     });
 });
-app.get('/about', function showDiv() {
-    document.getElementById('welcomeDiv').style.display = "block";
-});
 module.exports = app;
 
 //# sourceMappingURL=app.js.map

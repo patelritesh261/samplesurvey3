@@ -34,6 +34,8 @@ var users = require('./routes/users');
 var articles = require('./routes/articles');
 var mcq = require('./routes/multiple');
 
+
+
 var app = express();
 
 // view engine setup
@@ -64,6 +66,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 // passport config
 passport.use(User.createStrategy());
 //passport.use(new LocalStrategy(User.authenticate()));
+
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -116,8 +119,5 @@ app.use((error: CustomError, req: express.Request, res: express.Response, next: 
     });
 });
 
-app.get('/about',function showDiv() {
-   document.getElementById('welcomeDiv').style.display = "block";
-});
 
 module.exports = app;
