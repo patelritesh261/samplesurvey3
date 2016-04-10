@@ -36,6 +36,8 @@ var articles = require('./routes/articles');
 var mcq = require('./routes/multiple');
 var respond = require('./routes/respond');
 
+
+
 var app = express();
 
 // view engine setup
@@ -66,6 +68,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 // passport config
 passport.use(User.createStrategy());
 //passport.use(new LocalStrategy(User.authenticate()));
+
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 

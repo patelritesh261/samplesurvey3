@@ -33,7 +33,7 @@ router.get('/services', (req: express.Request, res: express.Response, next: any)
 
 /* GET about page. */
 router.get('/about', (req: express.Request, res: express.Response, next: any) => {
-    res.render('index', { 
+    res.render('about', { 
         title: 'About',
         displayName: req.user ? req.user.displayName : '' });
 });

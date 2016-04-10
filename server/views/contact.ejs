@@ -1,5 +1,11 @@
 <% include partials/header.ejs %>
     <% include partials/navbar.ejs %>
+    <style>
+      #map {
+        width: 500px;
+        height: 400px;
+      }
+    </style>
         <main class="container">
         <div class="row">
         <div class="col-md-offset-4 col-md-4">
@@ -30,5 +36,18 @@
             </form>
             </div>
             </div>
+            
+            <div id="map"></div>
+    <script>
+      function initMap() {
+        var mapDiv = document.getElementById('map');
+        var map = new google.maps.Map(mapDiv, {
+          center: {lat: 44.540, lng: -78.546},
+          zoom: 8
+        });
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
+        async defer></script>
         </main>
         <% include partials/footer.ejs %>

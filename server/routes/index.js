@@ -26,7 +26,7 @@ router.get('/services', function (req, res, next) {
 });
 /* GET about page. */
 router.get('/about', function (req, res, next) {
-    res.render('index', {
+    res.render('about', {
         title: 'About',
         displayName: req.user ? req.user.displayName : '' });
 });
