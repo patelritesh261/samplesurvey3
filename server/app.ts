@@ -14,6 +14,7 @@ import userModel = require('./models/user');
 // MCQ
 import mcqModel = require('./models/multiple');
 
+
 import User = userModel.User;
 import Mcq = mcqModel.Mcq;
 
@@ -33,6 +34,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var articles = require('./routes/articles');
 var mcq = require('./routes/multiple');
+var respond = require('./routes/respond');
 
 var app = express();
 
@@ -72,6 +74,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/articles', articles);
 app.use('/multiple', mcq);
+app.use('/respond', respond);
 
 // connect to mongodb with mongoose
 var DB = require('./config/db');

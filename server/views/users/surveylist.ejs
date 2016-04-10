@@ -2,8 +2,8 @@
 <% include ../partials/navbar.ejs %>
 <main class="container">
    
-<font color="green"><b><i><h2>Survey</h2></b></i></font>
-  
+<font color="green"><b><i><h2><%= surveyname %></h2></b></i></font>
+ 
      <table class="table table-inverse">
    <% for (var i = 0; i < mcq.length; i++) {
     if(mcq[i].displayName == displayName  )
@@ -13,19 +13,8 @@
   <tbody>
     <tr>
      
-      <th colspan="7"><%= mcq[i].question %></th>
-      <th>
-          <div class="col-md-5 ">
-           <a  href="/multiple/add/<%= mcq[i]._id %>" title="Delete" >
-                        <button type="button" class="btn btn-success">Edit</button>
-                    </a>
-          </div>
-          <div class="col-md-4">
-          <a href="/multiple/delete/<%= mcq[i]._id %>" title="Delete" onclick="return confirm('Are you sure you want to delete this?');">
-                        <button type="button" class="btn btn-danger">Delete</button>
-                    </a>
-          </div>
-      </th>
+      <th colspan="8"><%= mcq[i].question %></th>
+      
     </tr>
     <tr>
       <td width="5%">A</td>
@@ -42,7 +31,16 @@
   </tbody>
    <% }} }  %>
      </table>
-
+<div>
    
+       
+</div>
+   <form action="/respond/presend" method="get">
+                                             <input type="hidden" name="surveyName" value="<%= surveyname %>"/>
+                                             <input type="hidden" name="displayName" value="<%= displayName %>"/>
+                                              <input type="hidden" name="surveyType" value="multiple"/>
+                                           <a href=""> <button type="submit" class="btn btn-success" >Generate Survey</button></a>
+                                           <!--   <a href="users/add"> <font color="green"><b><i><h5><%= mcq[i] %></h5></b></i></font></a>-->
+                                            </form>
 </main>
 <% include ../partials/footer.ejs %>
