@@ -2,7 +2,9 @@
 var express = require('express');
 var router = express.Router();
 //variable declaration
-var surveyname, surveytype;
+var surveyname, surveytype, mcqrespond, displayname, fromadds;
+var mcqModel = require('../models/multiple');
+var Mcq = mcqModel.Mcq;
 /* Utility Function to check if user is authenticated */
 function requireAuth(req, res, next) {
     // check if the user is logged in
@@ -33,10 +35,32 @@ router.post('/presend', requireAuth, function (req, res, next) {
     res.send(ss);
     // res.render('multiple/text');
 });
-router.get('/:displayName/:surveyType/:surveyName/:fromadd', requireAuth, function (req, res, next) {
-    var ss = req.params;
-    res.send(ss);
+router.get('/:displayName/:surveyType/:surveyName/:fromadd', function (req, res, next) {
+    displayname = req.params.displayName;
+    surveyname = req.params.surveyName;
+    fromadds = req.params.fromadd;
+    // use the Users model to query the Users collection 
+    Mcq.find({ displayName: displayname, surveyName: surveyname }, {}, function (error, mcq) {
+        if (error) {
+            console.log(error);
+            res.end(error);
+        }
+        else {
+            // no error, we found a list of users
+            mcqrespond = mcq;
+            res.redirect('/respond/feedbackmcq');
+        }
+    });
     //res.render('multiple/text');
+});
+router.get('/feedbackmcq', function (req, res, next) {
+    res.render('respond/feedbackmcq', {
+        title: 'Feedback',
+        mcq: mcqrespond,
+        surveyname: surveyname,
+        displayName: displayname,
+        fromadd: fromadds
+    });
 });
 // make this public
 module.exports = router;

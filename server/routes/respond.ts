@@ -4,7 +4,7 @@ var router = express.Router();
 
 
 //variable declaration
-var surveyname,surveytype;
+var surveyname,surveytype,mcqrespond,displayname,fromadds;
 // db references
 import mongoose = require('mongoose');
 import mcqModel = require('../models/multiple');
@@ -45,12 +45,37 @@ router.post('/presend', requireAuth, (req: express.Request, res: express.Respons
 res.send(ss);
    // res.render('multiple/text');
 });
-router.get('/:displayName/:surveyType/:surveyName/:fromadd', requireAuth, (req: express.Request, res: express.Response, next: any) => {
-      var ss=req.params;
-     res.send(ss);
+router.get('/:displayName/:surveyType/:surveyName/:fromadd', (req: express.Request, res: express.Response, next: any) => {
+      displayname=req.params.displayName;
+       surveyname=req.params.surveyName;
+       fromadds=req.params.fromadd;
+     
+    // use the Users model to query the Users collection 
+   Mcq.find({displayName:displayname,surveyName:surveyname},{},(error, mcq) => {
+        if (error) {
+            console.log(error);
+            res.end(error);
+        }
+        else {
+            // no error, we found a list of users
+            mcqrespond=mcq;
+            res.redirect('/respond/feedbackmcq');
+        }
+    });
 
     //res.render('multiple/text');
 });
+
+router.get('/feedbackmcq', (req: express.Request, res: express.Response, next: any) => {
+      res.render('respond/feedbackmcq',{
+          title:'Feedback',
+          mcq:mcqrespond,
+          surveyname:surveyname,
+          displayName:displayname,
+          fromadd:fromadds
+      });
+});
+
 
 // make this public
 module.exports = router;
