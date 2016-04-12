@@ -64,7 +64,7 @@ router.get('/selectsurvey', requireAuth, function (req, res, next) {
         }
         else {
             // no error, we found a list of users
-            res.render('multiple/createsurvey', {
+            res.render('users/', {
                 title: 'MCQ Survey',
                 mcq: mcq,
                 displayName: req.user ? req.user.displayName : ''
@@ -74,8 +74,8 @@ router.get('/selectsurvey', requireAuth, function (req, res, next) {
 });
 router.post('/selectsurvey', requireAuth, function (req, res, next) {
     // no error, we found a list of users
-    // res.redirect('/surveylist');
     ss = req.body.surveyName;
+    // return  res.redirect('/users/surveylist');
     Mcq.find(function (error, mcq) {
         if (error) {
             console.log(error);
@@ -87,7 +87,7 @@ router.post('/selectsurvey', requireAuth, function (req, res, next) {
                 title: 'MCQ Survey',
                 surveyname: ss,
                 mcq: mcq,
-                displayName: req.user ? req.user.displayName : ''
+                displayName: req.user ? req.user.displayName : '',
             });
         }
     });
@@ -102,7 +102,7 @@ router.get('/selectsurveyagree', requireAuth, function (req, res, next) {
         }
         else {
             // no error, we found a list of users
-            res.render('multiple/createsurvey', {
+            res.render('users/agreesurveylist', {
                 title: 'Agree/Disagree Survey',
                 agree: agree,
                 displayName: req.user ? req.user.displayName : ''
@@ -129,22 +129,6 @@ router.post('/selectsurveyagree', requireAuth, function (req, res, next) {
             });
         }
     });
-});
-/* Render Registration page */
-router.get('/add', function (req, res, next) {
-    //  var ss=req.body.surveyName;
-    //  res.send('send'+ss);
-    // res.redirect('/multiple/createsurvey');
-    /*  res.render('users/add', {
-          title: 'Register',
-          messages: req.flash('registerMessage'),
-          displayName: req.user ? req.user.displayName : ''
-      });*/
-});
-/* Process Registration Request */
-router.post('/add', requireAuth, function (req, res, next) {
-    ss = req.body.surveyName;
-    res.redirect('/users/surveylist');
 });
 // GET add page - show the blank form
 /*router.get('/add', requireAuth, (req: express.Request, res: express.Response, next: any) => {
@@ -232,7 +216,7 @@ router.get('/delete/:id', requireAuth, function (req, res, next) {
 });
 // GET edit page - show the current user in the form
 /* Render Registration page */
-router.get('/surveylist', requireAuth, function (req, res, next) {
+router.get('/surveylist1', requireAuth, function (req, res, next) {
     Mcq.find(function (error, mcq) {
         if (error) {
             console.log(error);
@@ -242,12 +226,15 @@ router.get('/surveylist', requireAuth, function (req, res, next) {
             // no error, we found a list of users
             res.render('users/surveylist', {
                 title: 'MCQ Survey',
-                //surveyname:ss,
+                surveyname: ss,
                 mcq: mcq,
                 displayName: req.user ? req.user.displayName : ''
             });
         }
     });
+});
+router.get('/selectsurvey/send', requireAuth, function (req, res, next) {
+    res.redirect('/login');
 });
 // make this public
 module.exports = router;

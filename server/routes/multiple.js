@@ -293,6 +293,21 @@ router.get('/agreedelete/:id', requireAuth, function (req, res, next) {
         }
     });
 });
+router.get('/text', requireAuth, function (req, res, next) {
+    var ss = req.query;
+    res.redirect('/multiple/respond/' + ss.displayName + '/' + ss.surveyType + '/' + ss.surveyName);
+    //res.render('multiple/text');
+});
+router.post('/text', requireAuth, function (req, res, next) {
+    var ss = req.body;
+    res.send(ss);
+    // res.render('multiple/text');
+});
+router.get('/respond/:displayName/:surveyType/:surveyName', requireAuth, function (req, res, next) {
+    var ss = req.query;
+    res.send('whoooooooooooooooooooooooooooooo');
+    //res.render('multiple/text');
+});
 // make this public
 module.exports = router;
 

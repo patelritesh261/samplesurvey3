@@ -23,6 +23,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var articles = require('./routes/articles');
 var mcq = require('./routes/multiple');
+var respond = require('./routes/respond');
 var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -54,6 +55,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/articles', articles);
 app.use('/multiple', mcq);
+app.use('/respond', respond);
 // connect to mongodb with mongoose
 var DB = require('./config/db');
 mongoose.connect(DB.url);

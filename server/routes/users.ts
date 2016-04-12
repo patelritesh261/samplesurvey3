@@ -76,7 +76,7 @@ router.get('/selectsurvey', requireAuth, (req: express.Request, res: express.Res
         else {
             // no error, we found a list of users
             
-            res.render('multiple/createsurvey', {
+            res.render('users/', {
                 title: 'MCQ Survey',
                 mcq: mcq,
                 displayName: req.user ? req.user.displayName : ''
@@ -89,21 +89,22 @@ router.post('/selectsurvey', requireAuth, (req: express.Request, res: express.Re
     
             // no error, we found a list of users
           
-                 // res.redirect('/surveylist');
+                
                 ss=req.body.surveyName;
-         
-          Mcq.find((error, mcq) => {
+       // return  res.redirect('/users/surveylist');
+        Mcq.find((error, mcq) => {
         if (error) {
             console.log(error);
             res.end(error);
         }
         else {
             // no error, we found a list of users
-            res.render('users/surveylist', {
+           
+           res.render('users/surveylist', {
                 title: 'MCQ Survey',
                 surveyname:ss,
                 mcq: mcq,
-            displayName: req.user ? req.user.displayName : ''
+            displayName: req.user ? req.user.displayName : '',
             
             });
         }
@@ -125,7 +126,7 @@ router.get('/selectsurveyagree', requireAuth, (req: express.Request, res: expres
         else {
             // no error, we found a list of users
             
-            res.render('multiple/createsurvey', {
+            res.render('users/agreesurveylist', {
                 title: 'Agree/Disagree Survey',
                 agree: agree,
                 displayName: req.user ? req.user.displayName : ''
@@ -162,25 +163,7 @@ router.post('/selectsurveyagree', requireAuth, (req: express.Request, res: expre
     
 });
 
-/* Render Registration page */
-router.get('/add', (req:express.Request, res: express.Response, next:any) => {
-  //  var ss=req.body.surveyName;
-  //  res.send('send'+ss);
-  // res.redirect('/multiple/createsurvey');
-      /*  res.render('users/add', {
-            title: 'Register',
-            messages: req.flash('registerMessage'),
-            displayName: req.user ? req.user.displayName : ''
-        });*/
-       
-});
 
-/* Process Registration Request */
-router.post('/add', requireAuth,(req:express.Request, res: express.Response, next:any) => {
-    
-     ss=req.body.surveyName;
-    res.redirect('/users/surveylist');
-});
 
 
 // GET add page - show the blank form
@@ -282,7 +265,7 @@ router.get('/delete/:id', requireAuth, (req: express.Request, res: express.Respo
 
 // GET edit page - show the current user in the form
 /* Render Registration page */
-router.get('/surveylist',requireAuth, (req:express.Request, res: express.Response, next:any) => {
+router.get('/surveylist1',requireAuth, (req:express.Request, res: express.Response, next:any) => {
 
       Mcq.find((error, mcq) => {
         if (error) {
@@ -293,7 +276,7 @@ router.get('/surveylist',requireAuth, (req:express.Request, res: express.Respons
             // no error, we found a list of users
             res.render('users/surveylist', {
                 title: 'MCQ Survey',
-                //surveyname:ss,
+                surveyname:ss,
                 mcq: mcq,
             displayName: req.user ? req.user.displayName : ''
             
@@ -302,5 +285,11 @@ router.get('/surveylist',requireAuth, (req:express.Request, res: express.Respons
     });
        
 });
+router.get('/selectsurvey/send',requireAuth, (req:express.Request, res: express.Response, next:any) => {
+    res.redirect('/login');
+});
+
+
+
 // make this public
 module.exports = router;

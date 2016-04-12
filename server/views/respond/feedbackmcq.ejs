@@ -6,9 +6,7 @@
  
      <table class="table table-inverse">
    <% for (var i = 0; i < mcq.length; i++) {
-    if(mcq[i].displayName == displayName  )
-        {
-        if(mcq[i].surveyName==surveyname){
+  
     %>
   <tbody>
     <tr>
@@ -17,31 +15,31 @@
       
     </tr>
     <tr>
-      <td width="5%">A</td>
+      <td width="5%"><input type="radio" name="group<%= i %>" id="mcq" value="<%= mcq[i].option1 %>" ></td>
       <td width="20%"><%= mcq[i].option1 %></td>
-      <td  width="5%">B</td>
+      <td  width="5%"><input type="radio" name="group<%= i %>" id="mcq" value="<%= mcq[i].option2 %>" ></td>
       <td width="20%"><%= mcq[i].option2 %></td>
-      <td width="5%">C</td>
+      <td width="5%"><input type="radio" name="group<%= i %>" id="mcq" value="<%= mcq[i].option3 %>" ></td>
       <td width="20%"><%= mcq[i].option3 %></td>
-      <td  width="5%">D</td>
+      <td  width="5%"><input type="radio" name="group<%= i %>" id="mcq" value="<%= mcq[i].option4 %>" ></td>
       <td width="20%"><%= mcq[i].option4 %></td>
     </tr>
    
     
   </tbody>
-   <% }} }  %>
+   <%  }  %>
      </table>
 <div>
    
        
 </div>
-   <form action="/respond/presend" method="get">
+   <form action="" method="post">
                                              <input type="hidden" name="surveyName" value="<%= surveyname %>"/>
                                              <input type="hidden" name="displayName" value="<%= displayName %>"/>
                                               <input type="hidden" name="surveyType" value="multiple"/>
-                                               <input type="email" name="fromadd" placeholder="Email"/>
-                                           <a href=""> <button type="submit" class="btn btn-success" >Generate Survey</button></a>
-                                           <!--   <a href="users/add"> <font color="green"><b><i><h5><%= mcq[i] %></h5></b></i></font></a>-->
+                                               <input type="email" name="fromadd" value="<%= fromadd %>" placeholder="Email"/>
+                                           <a href=""> <button type="submit" class="btn btn-success" >Submit Survey</button></a>
+                                         
                                             </form>
 </main>
 <% include ../partials/footer.ejs %>
