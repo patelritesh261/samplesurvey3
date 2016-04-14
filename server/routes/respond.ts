@@ -143,7 +143,7 @@ router.get('/:displayName/:surveyType/:surveyName/:fromadd', (req: express.Reque
             res.redirect('/respond/feedbackmcq');
         }
     });
-}else if(surveytype=="multiple"){
+}else if(surveytype=="agree"){
     Agree.find({displayName:displayname,surveyName:surveyname},{},(error, agree) => {
         if (error) {
             console.log(error);

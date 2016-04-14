@@ -110,7 +110,7 @@ router.get('/:displayName/:surveyType/:surveyName/:fromadd', function (req, res,
             }
         });
     }
-    else if (surveytype == "multiple") {
+    else if (surveytype == "agree") {
         Agree.find({ displayName: displayname, surveyName: surveyname }, {}, function (error, agree) {
             if (error) {
                 console.log(error);
