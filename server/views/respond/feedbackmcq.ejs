@@ -3,41 +3,46 @@
 <main class="container">
    
 <font color="green"><b><i><h2><%= surveyname %></h2></b></i></font>
- 
+   <form action="/respond/presend" method="post">
+  
      <table class="table table-inverse">
+         
    <% for (var i = 0; i < mcq.length; i++) {
   
     %>
+  
+  <fieldset>
   <tbody>
     <tr>
      
-      <th colspan="8"><%= mcq[i].question %></th>
+      <th colspan="8"><input type="hidden" name="question" id="mcq" value="<%= mcq[i].question %>" ><%= mcq[i].question %></th>
       
     </tr>
     <tr>
-      <td width="5%"><input type="radio" name="group<%= i %>" id="mcq" value="<%= mcq[i].option1 %>" ></td>
+      <td width="5%"><input type="radio" name="answer<%= i %>" id="mcq" value="<%= mcq[i].option1 %>" ></td>
       <td width="20%"><%= mcq[i].option1 %></td>
-      <td  width="5%"><input type="radio" name="group<%= i %>" id="mcq" value="<%= mcq[i].option2 %>" ></td>
+      <td  width="5%"><input type="radio" name="answer<%= i %>" id="mcq" value="<%= mcq[i].option2 %>" ></td>
       <td width="20%"><%= mcq[i].option2 %></td>
-      <td width="5%"><input type="radio" name="group<%= i %>" id="mcq" value="<%= mcq[i].option3 %>" ></td>
+      <td width="5%"><input type="radio" name="answer<%= i %>" id="mcq" value="<%= mcq[i].option3 %>" ></td>
       <td width="20%"><%= mcq[i].option3 %></td>
-      <td  width="5%"><input type="radio" name="group<%= i %>" id="mcq" value="<%= mcq[i].option4 %>" ></td>
+      <td  width="5%"><input type="radio" name="answer<%= i %>" id="mcq" value="<%= mcq[i].option4 %>" ></td>
       <td width="20%"><%= mcq[i].option4 %></td>
+      
+                                            
     </tr>
    
     
   </tbody>
+  </fieldset>
+   
    <%  }  %>
      </table>
-<div>
-   
-       
-</div>
-   <form action="" method="post">
-                                             <input type="hidden" name="surveyName" value="<%= surveyname %>"/>
+             <input type="hidden" name="length" id="mcq" value="<%= mcq.length %>" >
+                                              <input type="hidden" name="surveyName" value="<%= surveyname %>"/>
                                              <input type="hidden" name="displayName" value="<%= displayName %>"/>
                                               <input type="hidden" name="surveyType" value="multiple"/>
-                                               <input type="email" name="fromadd" value="<%= fromadd %>" placeholder="Email"/>
+                                               <input type="email" name="fromadd" value="<%= fromadd %>" placeholder="Email"/> 
+                                             
                                            <a href=""> <button type="submit" class="btn btn-success" >Submit Survey</button></a>
                                          
                                             </form>
