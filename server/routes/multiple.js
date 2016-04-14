@@ -148,7 +148,7 @@ router.get('/add', function (req, res, next) {
         }
     });
 });
-/* Process Registration Request */
+/* Process mutilpe  Request */
 router.post('/add', function (req, res, next) {
     // attempt to register user
     Mcq.create({

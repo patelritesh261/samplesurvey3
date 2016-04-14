@@ -4,7 +4,9 @@ var router = express.Router();
 //variable declaration
 var surveyname, surveytype, mcqrespond, displayname, fromadds;
 var mcqModel = require('../models/multiple');
+var respondModel = require('../models/respond');
 var Mcq = mcqModel.Mcq;
+var Respond = respondModel.Respond;
 /* Utility Function to check if user is authenticated */
 function requireAuth(req, res, next) {
     // check if the user is logged in
@@ -31,9 +33,79 @@ sendgrid.send(email);*/
     //res.render('multiple/text');
 });
 router.post('/presend', requireAuth, function (req, res, next) {
-    var ss = req.body;
-    res.send(ss);
-    // res.render('multiple/text');
+    var noq = req.body.length;
+    var qanswer = "";
+    for (var i = 0; i < req.body.length; i++) {
+        if (i == 0) {
+            qanswer = req.body.answer0;
+        }
+        else if (i == 1) {
+            qanswer = req.body.answer1;
+        }
+        /* else if(i==2)
+         {
+             
+             qanswer=req.body.answer2;
+         }
+         else if(i==3)
+         {
+             
+             qanswer=req.body.answer3;
+         }
+         else if(i==4)
+         {
+             
+             qanswer=req.body.answer4;
+         }
+         else if(i==5)
+         {
+             
+             qanswer=req.body.answer5;
+         }
+         else if(i==6)
+         {
+             
+             qanswer=req.body.answer6;
+         }
+         else if(i==7)
+         {
+             
+             qanswer=req.body.answer7;
+         }
+         else if(i==8)
+         {
+             
+             qanswer=req.body.answer8;
+         }
+         else if(i==9)
+         {
+             
+             qanswer=req.body.answer9;
+         }
+         else if(i==10)
+         {
+             
+             qanswer=req.body.answer10;
+         }*/
+        // res.send(qanswer);
+        Respond.create({
+            question: req.body.question[i],
+            answer: qanswer,
+            senderName: req.body.displayName,
+            receiverName: req.body.fromadd,
+            surveyName: req.body.surveyName,
+        }, function (error, Respond) {
+            // did we get back an error or valid Article object?
+            if (error) {
+                console.log(error);
+                res.end(error);
+            }
+            else {
+            }
+        });
+        qanswer = "";
+    }
+    res.redirect('/respond/thankyou');
 });
 router.get('/:displayName/:surveyType/:surveyName/:fromadd', function (req, res, next) {
     displayname = req.params.displayName;
@@ -60,6 +132,16 @@ router.get('/feedbackmcq', function (req, res, next) {
         surveyname: surveyname,
         displayName: displayname,
         fromadd: fromadds
+    });
+});
+router.post('/feedbackmcq', function (req, res, next) {
+    var ss = req.body;
+    res.send(ss);
+});
+router.get('/thankyou', function (req, res, next) {
+    res.render('respond/thankyou', {
+        title: 'Thank you',
+        displayName: displayname,
     });
 });
 // make this public

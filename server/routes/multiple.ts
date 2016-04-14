@@ -186,7 +186,7 @@ router.get('/add', (req:express.Request, res: express.Response, next:any) => {
        
 });
 
-/* Process Registration Request */
+/* Process mutilpe  Request */
 router.post('/add', (req:express.Request, res: express.Response, next:any) => {
     // attempt to register user
     Mcq.create({
