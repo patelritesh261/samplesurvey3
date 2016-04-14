@@ -4,7 +4,7 @@ var router = express.Router();
 
 
 //variable declaration
-var surveyname,surveytype,mcqrespond,displayname,fromadds;
+var surveyname,surveytype,mcqrespond,agreerespond,displayname,fromadds;
 // db references
 import mongoose = require('mongoose');
 import mcqModel = require('../models/multiple');
@@ -58,7 +58,7 @@ for(var i=0;i<req.body.length;i++){
         
         qanswer=req.body.answer1;
     }
-   /* else if(i==2)
+    else if(i==2)
     {
         
         qanswer=req.body.answer2;
@@ -102,7 +102,7 @@ for(var i=0;i<req.body.length;i++){
     {
         
         qanswer=req.body.answer10;
-    }*/
+    }
    // res.send(qanswer);
  Respond.create({
         question: req.body.question[i],
@@ -126,10 +126,11 @@ for(var i=0;i<req.body.length;i++){
     res.redirect('/respond/thankyou');
 });
 router.get('/:displayName/:surveyType/:surveyName/:fromadd', (req: express.Request, res: express.Response, next: any) => {
+    surveytype=req.params.surveyType;
       displayname=req.params.displayName;
        surveyname=req.params.surveyName;
        fromadds=req.params.fromadd;
-     
+     if(surveytype=="multiple"){
     // use the Users model to query the Users collection 
    Mcq.find({displayName:displayname,surveyName:surveyname},{},(error, mcq) => {
         if (error) {
@@ -142,7 +143,20 @@ router.get('/:displayName/:surveyType/:surveyName/:fromadd', (req: express.Reque
             res.redirect('/respond/feedbackmcq');
         }
     });
-
+}else if(surveytype=="multiple"){
+    Agree.find({displayName:displayname,surveyName:surveyname},{},(error, agree) => {
+        if (error) {
+            console.log(error);
+            res.end(error);
+        }
+        else {
+            // no error, we found a list of users
+            agreerespond=agree;
+            res.redirect('/respond/feedbackagree');
+        }
+    });
+    
+}
     //res.render('multiple/text');
 });
 
@@ -150,6 +164,15 @@ router.get('/feedbackmcq', (req: express.Request, res: express.Response, next: a
       res.render('respond/feedbackmcq',{
           title:'Feedback',
           mcq:mcqrespond,
+          surveyname:surveyname,
+          displayName:displayname,
+          fromadd:fromadds
+      });
+});
+router.get('/feedbackagree', (req: express.Request, res: express.Response, next: any) => {
+      res.render('respond/feedbackagree',{
+          title:'Feedback',
+          agree:agreerespond,
           surveyname:surveyname,
           displayName:displayname,
           fromadd:fromadds

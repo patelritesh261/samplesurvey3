@@ -2,10 +2,12 @@
 var express = require('express');
 var router = express.Router();
 //variable declaration
-var surveyname, surveytype, mcqrespond, displayname, fromadds;
+var surveyname, surveytype, mcqrespond, agreerespond, displayname, fromadds;
 var mcqModel = require('../models/multiple');
+var agreeModel = require('../models/agree');
 var respondModel = require('../models/respond');
 var Mcq = mcqModel.Mcq;
+var Agree = agreeModel.Agree;
 var Respond = respondModel.Respond;
 /* Utility Function to check if user is authenticated */
 function requireAuth(req, res, next) {
@@ -42,51 +44,33 @@ router.post('/presend', requireAuth, function (req, res, next) {
         else if (i == 1) {
             qanswer = req.body.answer1;
         }
-        /* else if(i==2)
-         {
-             
-             qanswer=req.body.answer2;
-         }
-         else if(i==3)
-         {
-             
-             qanswer=req.body.answer3;
-         }
-         else if(i==4)
-         {
-             
-             qanswer=req.body.answer4;
-         }
-         else if(i==5)
-         {
-             
-             qanswer=req.body.answer5;
-         }
-         else if(i==6)
-         {
-             
-             qanswer=req.body.answer6;
-         }
-         else if(i==7)
-         {
-             
-             qanswer=req.body.answer7;
-         }
-         else if(i==8)
-         {
-             
-             qanswer=req.body.answer8;
-         }
-         else if(i==9)
-         {
-             
-             qanswer=req.body.answer9;
-         }
-         else if(i==10)
-         {
-             
-             qanswer=req.body.answer10;
-         }*/
+        else if (i == 2) {
+            qanswer = req.body.answer2;
+        }
+        else if (i == 3) {
+            qanswer = req.body.answer3;
+        }
+        else if (i == 4) {
+            qanswer = req.body.answer4;
+        }
+        else if (i == 5) {
+            qanswer = req.body.answer5;
+        }
+        else if (i == 6) {
+            qanswer = req.body.answer6;
+        }
+        else if (i == 7) {
+            qanswer = req.body.answer7;
+        }
+        else if (i == 8) {
+            qanswer = req.body.answer8;
+        }
+        else if (i == 9) {
+            qanswer = req.body.answer9;
+        }
+        else if (i == 10) {
+            qanswer = req.body.answer10;
+        }
         // res.send(qanswer);
         Respond.create({
             question: req.body.question[i],
@@ -108,27 +92,52 @@ router.post('/presend', requireAuth, function (req, res, next) {
     res.redirect('/respond/thankyou');
 });
 router.get('/:displayName/:surveyType/:surveyName/:fromadd', function (req, res, next) {
+    surveytype = req.params.surveyType;
     displayname = req.params.displayName;
     surveyname = req.params.surveyName;
     fromadds = req.params.fromadd;
-    // use the Users model to query the Users collection 
-    Mcq.find({ displayName: displayname, surveyName: surveyname }, {}, function (error, mcq) {
-        if (error) {
-            console.log(error);
-            res.end(error);
-        }
-        else {
-            // no error, we found a list of users
-            mcqrespond = mcq;
-            res.redirect('/respond/feedbackmcq');
-        }
-    });
+    if (surveytype == "multiple") {
+        // use the Users model to query the Users collection 
+        Mcq.find({ displayName: displayname, surveyName: surveyname }, {}, function (error, mcq) {
+            if (error) {
+                console.log(error);
+                res.end(error);
+            }
+            else {
+                // no error, we found a list of users
+                mcqrespond = mcq;
+                res.redirect('/respond/feedbackmcq');
+            }
+        });
+    }
+    else if (surveytype == "multiple") {
+        Agree.find({ displayName: displayname, surveyName: surveyname }, {}, function (error, agree) {
+            if (error) {
+                console.log(error);
+                res.end(error);
+            }
+            else {
+                // no error, we found a list of users
+                agreerespond = agree;
+                res.redirect('/respond/feedbackagree');
+            }
+        });
+    }
     //res.render('multiple/text');
 });
 router.get('/feedbackmcq', function (req, res, next) {
     res.render('respond/feedbackmcq', {
         title: 'Feedback',
         mcq: mcqrespond,
+        surveyname: surveyname,
+        displayName: displayname,
+        fromadd: fromadds
+    });
+});
+router.get('/feedbackagree', function (req, res, next) {
+    res.render('respond/feedbackagree', {
+        title: 'Feedback',
+        agree: agreerespond,
         surveyname: surveyname,
         displayName: displayname,
         fromadd: fromadds
