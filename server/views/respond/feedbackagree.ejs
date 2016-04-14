@@ -1,0 +1,46 @@
+<% include ../partials/header.ejs %>
+<% include ../partials/navbar.ejs %>
+<main class="container">
+   
+<font color="green"><b><i><h2><%= surveyname %></h2></b></i></font>
+   <form action="/respond/presend" method="post">
+  
+     <table class="table table-inverse">
+         
+   <% for (var i = 0; i < agree.length; i++) {
+  
+    %>
+  
+  <fieldset>
+  <tbody>
+    <tr>
+     
+      <th colspan="8"><input type="hidden" name="question" id="agree" value="<%= agree[i].question %>" ><%= agree[i].question %></th>
+      
+    </tr>
+    <tr>
+      <td width="5%"><input type="radio" name="answer<%= i %>" id="agree" value="<%= agree[i].option1 %>" ></td>
+      <td width="20%"><%= agree[i].option1 %></td>
+      <td  width="5%"><input type="radio" name="answer<%= i %>" id="agree" value="<%= agree[i].option2 %>" ></td>
+      <td width="20%"><%= agree[i].option2 %></td>
+      
+                                            
+    </tr>
+   
+    
+  </tbody>
+  </fieldset>
+   
+   <%  }  %>
+     </table>
+             <input type="hidden" name="length" id="agree" value="<%= agree.length %>" >
+                                              <input type="hidden" name="surveyName" value="<%= surveyname %>"/>
+                                             <input type="hidden" name="displayName" value="<%= displayName %>"/>
+                                              <input type="hidden" name="surveyType" value="multiple"/>
+                                               <input type="email" name="fromadd" value="<%= fromadd %>" placeholder="Email"/> 
+                                             
+                                           <a href=""> <button type="submit" class="btn btn-success" >Submit Survey</button></a>
+                                         
+                                            </form>
+</main>
+<% include ../partials/footer.ejs %>
