@@ -101,6 +101,32 @@
                     </div>
                     <div class="col-md-2 col-sm-3">
                         <font color="green"><b><i><h4>Total No of response</h4></b></i></font>
+                        <table>
+                            <% for (var i = 0; i < respond.length; i++) {
+                            var surveyname=respond[i];
+  
+    %>
+
+                                <tr>
+
+                                    <td colspan="3">
+                                         <form action="users/respondselectsurvey" method="post">
+                                             <input type="hidden" name="surveyName" value="<%= respond[i] %>"/>
+                                             <input type="hidden" name="displayName" value="<%= displayName %>"/>
+                                          <a href="" >  <button type="submit" ><%= respond[i] %></button></a>
+                                           <!--   <a href="users/add"> <font color="green"><b><i><h5><%= mcq[i] %></h5></b></i></font></a>-->
+                                            </form>
+                                            
+                                       
+                                       
+                                    </td>
+
+                                </tr>
+
+
+
+                                <% } %>
+                        </table>
                 </div>
         </main>
         <% include ../partials/footer.ejs %>

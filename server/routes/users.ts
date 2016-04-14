@@ -49,14 +49,24 @@ router.get('/', requireAuth, (req: express.Request, res: express.Response, next:
                     }
                     else {
                               
+                             Respond.distinct("surveyName",{senderName:ds},(error, respond) => {
+                    if (error) {
+                        console.log(error);
+                        res.end(error);
+                    }
+                    else {
+                              
                             // no error, we found a list of users
                                 res.render('users/index', {
                                 title: 'Users',
                                 users: users,
                                 mcq:mcq,
                                 agree: agree,
+                                respond:respond,
                                 displayName: req.user ? req.user.displayName : ''
             });
+        }
+    });
         }
     });
                     }                  
@@ -64,6 +74,57 @@ router.get('/', requireAuth, (req: express.Request, res: express.Response, next:
         }
     });
 });        
+  
+  
+// GET - show main users page - list all the users
+router.get('/respondselectsurvey', requireAuth, (req: express.Request, res: express.Response, next: any) => {
+
+    // use the Users model to query the Users collection
+    Respond.find((error, respond) => {
+        if (error) {
+            console.log(error);
+            res.end(error);
+        }
+        else {
+            // no error, we found a list of users
+            
+            res.render('users/', {
+                title: 'MCQ Survey',
+                respond: respond,
+                displayName: req.user ? req.user.displayName : ''
+            });
+        }
+    });
+});
+router.post('/respondselectsurvey', requireAuth, (req: express.Request, res: express.Response, next: any) => {
+   
+    
+            // no error, we found a list of users
+          
+                
+                ss=req.body.surveyName;
+                var ds=req.body.displayName;
+       Respond.distinct("receiverName",{senderName:ds,surveyName:ss},(error, respond) => {
+                    if (error) {
+                        console.log(error);
+                        res.end(error);
+                    }
+                    else {
+                              
+                            // no error, we found a list of users
+                                res.render('users/respondselectsurvey', {
+                                title: 'Responses',
+                                
+                               surveyName:ss,
+                                respond:respond,
+                                displayName: req.user ? req.user.displayName : ''
+            });
+        }
+    });
+              
+       
+    
+});  
         
     
 
@@ -291,7 +352,6 @@ router.get('/surveylist1',requireAuth, (req:express.Request, res: express.Respon
 router.get('/selectsurvey/send',requireAuth, (req:express.Request, res: express.Response, next:any) => {
     res.redirect('/login');
 });
-
 
 
 // make this public
