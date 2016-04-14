@@ -8,9 +8,11 @@ import mongoose = require('mongoose');
 import userModel = require('../models/user');
 import mcqModel = require('../models/multiple');
 import agreeModel = require('../models/agree');
+import respondModel = require('../models/respond');
 import User = userModel.User;
 import Mcq = mcqModel.Mcq;
 import Agree = agreeModel.Agree;
+import Respond = respondModel.Respond;
 
 /* Utility Function to check if user is authenticated */
 function requireAuth(req:express.Request, res:express.Response, next: any) {
@@ -46,6 +48,7 @@ router.get('/', requireAuth, (req: express.Request, res: express.Response, next:
                         res.end(error);
                     }
                     else {
+                              
                             // no error, we found a list of users
                                 res.render('users/index', {
                                 title: 'Users',

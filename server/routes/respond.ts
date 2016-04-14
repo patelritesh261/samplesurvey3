@@ -143,7 +143,7 @@ router.get('/:displayName/:surveyType/:surveyName/:fromadd', (req: express.Reque
             res.redirect('/respond/feedbackmcq');
         }
     });
-}else if(surveytype=="multiple"){
+}else if(surveytype=="agree"){
     Agree.find({displayName:displayname,surveyName:surveyname},{},(error, agree) => {
         if (error) {
             console.log(error);
@@ -180,15 +180,25 @@ router.get('/feedbackagree', (req: express.Request, res: express.Response, next:
 });
 
 router.post('/feedbackmcq', (req: express.Request, res: express.Response, next: any) => {
-    var ss=req.body;
-    res.send(ss);
+   
 });
 router.get('/thankyou', (req: express.Request, res: express.Response, next: any) => {
-      res.render('respond/thankyou',{
+     Respond.distinct("receiverName",{senderName:'Ritz'},(error, mcq) => {
+          if (error) {
+            console.log(error);
+            res.end(error);
+        }
+        else {
+         
+          res.send('aaaaaaaaaa'+mcq);
+        }
+     });
+                               
+    /*  res.render('respond/thankyou',{
           title:'Thank you',
           displayName:displayname,
          
-      });
+      });*/
 });
 // make this public
 module.exports = router;

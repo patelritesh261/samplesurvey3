@@ -110,7 +110,7 @@ router.get('/:displayName/:surveyType/:surveyName/:fromadd', function (req, res,
             }
         });
     }
-    else if (surveytype == "multiple") {
+    else if (surveytype == "agree") {
         Agree.find({ displayName: displayname, surveyName: surveyname }, {}, function (error, agree) {
             if (error) {
                 console.log(error);
@@ -144,14 +144,22 @@ router.get('/feedbackagree', function (req, res, next) {
     });
 });
 router.post('/feedbackmcq', function (req, res, next) {
-    var ss = req.body;
-    res.send(ss);
 });
 router.get('/thankyou', function (req, res, next) {
-    res.render('respond/thankyou', {
-        title: 'Thank you',
-        displayName: displayname,
+    Respond.distinct("receiverName", { senderName: 'Ritz' }, function (error, mcq) {
+        if (error) {
+            console.log(error);
+            res.end(error);
+        }
+        else {
+            res.send('aaaaaaaaaa' + mcq);
+        }
     });
+    /*  res.render('respond/thankyou',{
+          title:'Thank you',
+          displayName:displayname,
+         
+      });*/
 });
 // make this public
 module.exports = router;
