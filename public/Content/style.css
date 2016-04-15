@@ -298,16 +298,16 @@ button:focus {
     padding: 0px 15%;
 }
 .about-breifing .col-sm-6:first-child {
-    background: #e6675a;
+    background: #555500;
 }
 .about-breifing .col-sm-6:nth-child(2) {
-    background: #e65d4e;
+    background: #555500;
 }
 .about-breifing .col-sm-6:nth-child(3) {
-    background: #e65243;
+    background: #555500;
 }
 .about-breifing .col-sm-6:nth-child(4) {
-    background: #e74c3c;
+    background: #555500;
 }
 .item-no .count {
     font-size: 6.25em;
@@ -332,11 +332,11 @@ button:focus {
     font-size: .8125em;
 }
 .about-top .btn {
-    border: 2px solid #e74c3c;
+    border: 2px solid #555500;
 }
 .about-top .btn:hover {
-    background: #e74c3c;
-    color: #ffffff;
+    background: #555500;
+    color: #000000;
 }
 .progress {
     background: #ffffff;
@@ -347,7 +347,7 @@ button:focus {
     margin-bottom: 15px;
 }
 .progress-bar {
-    background: #e74c3c;
+    background: #555500;
     font-size: 13px;
     line-height: 30px;
     padding-left: 25px;

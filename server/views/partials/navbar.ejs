@@ -10,8 +10,10 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-       <img src="/images/icon.png" alt="Logo" style="width:70px;height:70px;">
- <font size = "20px" color="white">Survey Site</font>
+      <div class = "test">
+       <img src="/images/icon.png" alt="Logo" align="middle" style="width:50px;height:50px;">
+ <font size = "20px" color="white">Survey site</font>
+ </div>
       <!--<a class="navbar-brand" href="#"><i>Sample Survey</i></a>-->
     </div>
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -29,9 +31,11 @@
              <% if(displayName) { %>
                 <li class="active"><a href="/users">Users</a></li>
             <% } %>
+            
+            <li><a href="/multiple/createsurvey">Create survey</a></li>
             <li><a href="/about">About Us</a></li>
             <li><a href="/contact">Contact Us</a></li>
-        <% } else if(title == "About") { %>
+        <% }  else if(title == "About") { %>
             <li><a href="/">Home</a></li>
             <% if(displayName) { %>
                 <li><a href="/users">Users</a></li>
