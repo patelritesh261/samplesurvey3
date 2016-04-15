@@ -20,9 +20,16 @@
 .navbar-inverse .navbar-nav>.dropdown>a .caret { border-bottom-color: #FFFED9}
 .navbar-inverse .navbar-nav>.dropdown>a:hover .caret { border-bottom-color: #FFFFFF}
 
-.navbar-header img {position:fixed;left:0;top:0}
+/*.navbar-header img {position:fixed;left:0;top:0}*/
 
-
+.test {
+    position: relative;
+    display:inline-block; 
+}
+img {
+    
+    max-width:100%;
+}
 
 /* table css */
 table {
@@ -196,7 +203,7 @@ footer{
 	width: 35px;
 	height: 35px;
 	cursor: pointer;
-	background-color:  #75FAFF;
+	
 	border-radius: 2px;
 
 	font-size: 20px;
