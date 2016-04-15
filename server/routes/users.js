@@ -6,9 +6,11 @@ var ss;
 var userModel = require('../models/user');
 var mcqModel = require('../models/multiple');
 var agreeModel = require('../models/agree');
+var respondModel = require('../models/respond');
 var User = userModel.User;
 var Mcq = mcqModel.Mcq;
 var Agree = agreeModel.Agree;
+var Respond = respondModel.Respond;
 /* Utility Function to check if user is authenticated */
 function requireAuth(req, res, next) {
     // check if the user is logged in
@@ -39,17 +41,64 @@ router.get('/', requireAuth, function (req, res, next) {
                             res.end(error);
                         }
                         else {
-                            // no error, we found a list of users
-                            res.render('users/index', {
-                                title: 'Users',
-                                users: users,
-                                mcq: mcq,
-                                agree: agree,
-                                displayName: req.user ? req.user.displayName : ''
+                            Respond.distinct("surveyName", { senderName: ds }, function (error, respond) {
+                                if (error) {
+                                    console.log(error);
+                                    res.end(error);
+                                }
+                                else {
+                                    // no error, we found a list of users
+                                    res.render('users/index', {
+                                        title: 'Users',
+                                        users: users,
+                                        mcq: mcq,
+                                        agree: agree,
+                                        respond: respond,
+                                        displayName: req.user ? req.user.displayName : ''
+                                    });
+                                }
                             });
                         }
                     });
                 }
+            });
+        }
+    });
+});
+// GET - show main users page - list all the users
+router.get('/respondselectsurvey', requireAuth, function (req, res, next) {
+    // use the Users model to query the Users collection
+    Respond.find(function (error, respond) {
+        if (error) {
+            console.log(error);
+            res.end(error);
+        }
+        else {
+            // no error, we found a list of users
+            res.render('users/', {
+                title: 'MCQ Survey',
+                respond: respond,
+                displayName: req.user ? req.user.displayName : ''
+            });
+        }
+    });
+});
+router.post('/respondselectsurvey', requireAuth, function (req, res, next) {
+    // no error, we found a list of users
+    ss = req.body.surveyName;
+    var ds = req.body.displayName;
+    Respond.distinct("receiverName", { senderName: ds, surveyName: ss }, function (error, respond) {
+        if (error) {
+            console.log(error);
+            res.end(error);
+        }
+        else {
+            // no error, we found a list of users
+            res.render('users/respondselectsurvey', {
+                title: 'Responses',
+                surveyName: ss,
+                respond: respond,
+                displayName: req.user ? req.user.displayName : ''
             });
         }
     });
