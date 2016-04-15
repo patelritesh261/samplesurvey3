@@ -1,0 +1,68 @@
+<% include ../partials/header.ejs %>
+<script type="text/javascript" src="http://jqueryjs.googlecode.com/files/jquery-1.3.1.min.js" > </script> 
+<% include ../partials/navbar.ejs %>
+
+<main class="container"  id= "Print">
+   
+<font color="green"><b><i><h2><%= surveyname %></h2></b></i></font>
+   
+ <font color="green"><b><i><h5>Created By : <%= displayName %></h5></b></i></font>
+ <font color="green"><b><i><h5>Respond By : <%= recieverName %></h5></b></i></font>
+  <div class="row">
+     <table class="table table-inverse">
+   <% for (var i = 0; i < respond.length; i++) {
+    
+    %>
+  <tbody>
+    <tr>
+       <th >Question <%= i+1 %> : </th>
+      <th ><%= respond[i].question %></th>
+      
+    </tr>
+   <tr>
+      <td width="15%">Answer <%= i+1 %> : </td>
+      <td width="85%"><%= respond[i].answer %></td>
+     
+      
+    </tr>
+   
+    
+  </tbody>
+   <%  }  %>
+     </table>
+</div>
+
+<form action="/respond/presend" method="get">
+                                            
+                                          <button type="button" class="btn btn-success" onclick="PrintElem('#Print')" >Export Survey</button>
+                                         
+                                            </form>
+   
+</main>
+<script type="text/javascript">
+
+    function PrintElem(elem)
+    {
+        Popup($(elem).html());
+    }
+
+    function Popup(data) 
+    {
+        var mywindow = window.open('', 'my div', 'height=400,width=600');
+        mywindow.document.write('<html><head><title>my div</title>');
+        /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+        mywindow.document.write('</head><body >');
+        mywindow.document.write(data);
+        mywindow.document.write('</body></html>');
+
+        mywindow.document.close(); // necessary for IE >= 10
+        mywindow.focus(); // necessary for IE >= 10
+
+        mywindow.print();
+        mywindow.close();
+
+        return true;
+    }
+
+</script>
+<% include ../partials/footer.ejs %>

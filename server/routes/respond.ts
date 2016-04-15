@@ -178,27 +178,47 @@ router.get('/feedbackagree', (req: express.Request, res: express.Response, next:
           fromadd:fromadds
       });
 });
-
-router.post('/feedbackmcq', (req: express.Request, res: express.Response, next: any) => {
-   
+router.get('/presurveyreport', (req: express.Request, res: express.Response, next: any) => {
+    
+      res.render('respond/feedbackagree',{
+          title:'Feedback',
+          agree:agreerespond,
+          surveyname:surveyname,
+          displayName:displayname,
+          fromadd:fromadds
+      });
+});
+router.post('/presurveyreport', (req: express.Request, res: express.Response, next: any) => {
+   var ss=req.body.surveyName;
+                var ds=req.body.displayName;
+                var rn=req.body.recieverName;
+              
+ Respond.find({senderName:ds,surveyName:ss,receiverName:rn},{},(error, respond) => {
+                    if (error) {
+                        console.log(error);
+                        res.end(error);
+                    }
+                    else {
+                            
+                            // no error, we found a list of users
+                                res.render('respond/surveyreport', {
+                                title: 'Survey Report',
+                                recieverName:rn,
+                               surveyname:ss,
+                                respond:respond,
+                                displayName: req.user ? req.user.displayName : ''
+            });
+        }
+    });
 });
 router.get('/thankyou', (req: express.Request, res: express.Response, next: any) => {
-     Respond.distinct("receiverName",{senderName:'Ritz'},(error, mcq) => {
-          if (error) {
-            console.log(error);
-            res.end(error);
-        }
-        else {
-         
-          res.send('aaaaaaaaaa'+mcq);
-        }
-     });
+    
                                
-    /*  res.render('respond/thankyou',{
+     res.render('respond/thankyou',{
           title:'Thank you',
           displayName:displayname,
          
-      });*/
+      });
 });
 // make this public
 module.exports = router;

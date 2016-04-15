@@ -7,15 +7,15 @@
  <font color="green"><b><i><h4>Total No of response</h4></b></i></font>
                         <table>
                             <% for (var i = 0; i < respond.length; i++) {
-                            var surveyname=respond[i];
+                            
   
     %>
 
                                 <tr>
 
                                     <td colspan="3">
-                                         <form action="users/respondselectsurvey" method="post">
-                                             <input type="hidden" name="surveyName" value="surveyName"/>
+                                         <form action="/respond/presurveyreport" method="post">
+                                             <input type="hidden" name="surveyName" value="<%=surveyname %>"/>
                                               <input type="hidden" name="recieverName" value="<%= respond[i] %>"/>
                                              <input type="hidden" name="displayName" value="<%= displayName %>"/>
                                           <a href="" >  <button type="submit" ><%= respond[i] %></button></a>

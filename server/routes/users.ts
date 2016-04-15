@@ -115,12 +115,13 @@ router.post('/respondselectsurvey', requireAuth, (req: express.Request, res: exp
                                 res.render('users/respondselectsurvey', {
                                 title: 'Responses',
                                 
-                               surveyName:ss,
+                               surveyname:ss,
                                 respond:respond,
                                 displayName: req.user ? req.user.displayName : ''
             });
         }
     });
+    
               
        
     

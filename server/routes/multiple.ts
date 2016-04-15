@@ -297,7 +297,8 @@ res.send('Error');
     /*var id = req.params.id;
 
    var ds=req.user.displayName ;
-   Mcq.find(Mcq,{displayName:ds},{surveyName:id},(error, mcq) => {
+   Mcq.find(
+   ,{displayName:ds},{surveyName:id},(error, mcq) => {
         if (error) {
             console.log(error);
             res.end(error);

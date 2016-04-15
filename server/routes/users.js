@@ -96,7 +96,7 @@ router.post('/respondselectsurvey', requireAuth, function (req, res, next) {
             // no error, we found a list of users
             res.render('users/respondselectsurvey', {
                 title: 'Responses',
-                surveyName: ss,
+                surveyname: ss,
                 respond: respond,
                 displayName: req.user ? req.user.displayName : ''
             });

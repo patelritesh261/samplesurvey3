@@ -143,23 +143,41 @@ router.get('/feedbackagree', function (req, res, next) {
         fromadd: fromadds
     });
 });
-router.post('/feedbackmcq', function (req, res, next) {
+router.get('/presurveyreport', function (req, res, next) {
+    res.render('respond/feedbackagree', {
+        title: 'Feedback',
+        agree: agreerespond,
+        surveyname: surveyname,
+        displayName: displayname,
+        fromadd: fromadds
+    });
 });
-router.get('/thankyou', function (req, res, next) {
-    Respond.distinct("receiverName", { senderName: 'Ritz' }, function (error, mcq) {
+router.post('/presurveyreport', function (req, res, next) {
+    var ss = req.body.surveyName;
+    var ds = req.body.displayName;
+    var rn = req.body.recieverName;
+    Respond.find({ senderName: ds, surveyName: ss, receiverName: rn }, {}, function (error, respond) {
         if (error) {
             console.log(error);
             res.end(error);
         }
         else {
-            res.send('aaaaaaaaaa' + mcq);
+            // no error, we found a list of users
+            res.render('respond/surveyreport', {
+                title: 'Survey Report',
+                recieverName: rn,
+                surveyname: ss,
+                respond: respond,
+                displayName: req.user ? req.user.displayName : ''
+            });
         }
     });
-    /*  res.render('respond/thankyou',{
-          title:'Thank you',
-          displayName:displayname,
-         
-      });*/
+});
+router.get('/thankyou', function (req, res, next) {
+    res.render('respond/thankyou', {
+        title: 'Thank you',
+        displayName: displayname,
+    });
 });
 // make this public
 module.exports = router;
