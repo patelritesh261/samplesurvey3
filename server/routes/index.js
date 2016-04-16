@@ -47,26 +47,18 @@ router.get('/contact', function (req, res, next) {
 });
 /* Email processing */
 router.post('/contact', function (req, res, next) {
-    sendgrid.send({
-        to: 'tsiliopoulos@hotmail.com',
-        from: req.body.email,
-        subject: 'Contact Form Submission',
-        text: "This message has been sent from the contact form at [MongoDB Demo]\r\n\r\n" +
-            "Name: " + req.body.name + "\r\n\r\n" +
-            "Phone: " + req.body.phone + "\r\n\r\n" +
-            req.body.message,
-        html: "This message has been sent from the contact form at [MongoDB Demo]<br><br>" +
-            "<strong>Name:</strong> " + req.body.name + "<br><br>" +
-            "<strong>Phone:</strong> " + req.body.phone + "<br><br>" +
-            req.body.message
-    }, function (err, json) {
-        if (err) {
-            res.status(500).json('error');
-        }
-        res.render('contact', {
-            title: 'Contact',
-            messages: req.flash('successmessage')
-        });
+    var sendgrid = require("sendgrid")("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");
+    var email = new sendgrid.Email();
+    email.addTo("patelritesh261@gmail.com");
+    email.setFrom(req.body.email);
+    email.setSubject("Contact Form Submission");
+    email.setHtml("<html><body><main><h2>HI " + req.body.name + ",</main><h4>This message has been sent from the contact form at Sample Surveysite</h4><table><tr><td>" + "Name: " + req.body.name + "</td></tr><tr><td>" + "Phone: " + req.body.phone + "</td></tr><tr><td colspan=2>" + "Message : " + req.body.message + "</td></tr></table>Thank you</body></html>");
+    //email.setHtml("/respond/"+ss.displayName+"/"+ss.surveyType+"/"+ss.surveyName);
+    sendgrid.send(email);
+    res.render('contact', {
+        title: 'Contact',
+        messages: 'Thank you, we will contact as soon as possible.',
+        displayName: req.user ? req.user.displayName : ''
     });
 });
 /* Render Login Page */

@@ -275,16 +275,14 @@ footer{
 
 /* different backgroung*/
 .bg-1 { 
-    width:100%;
-    margin-top:50px;
+   
+    margin-top:100px;
     margin-bottom: 80px;
-    color: #000;
+   
 }
 .bg-2 { 
-    padding-top:100px;
-    padding-bottom: 80px;
-    background-color: #00BEFF; 
-    color: #ffffff;
+     padding-top :100px;
+    padding-top-bottom: 80px;
 }
 .bg-3 { 
     padding-top:100px;
