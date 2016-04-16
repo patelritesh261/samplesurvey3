@@ -28,7 +28,7 @@ router.get('/presend', requireAuth, (req: express.Request, res: express.Response
       var ss=req.query;
     var sendgrid = require("sendgrid")("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");
 var email = new sendgrid.Email();
-var domain="http://samplesurvey3.azurewebsites.net/respond";
+var domain="samplesurvey3.azurewebsites.net/respond";
 email.addTo(ss.fromadd);
 email.setFrom("patelritesh261@gmail.com");
 email.setSubject("Plese give your important feedbak.");
