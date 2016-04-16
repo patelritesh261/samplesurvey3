@@ -32,7 +32,7 @@ var domain="samplesurvey3.azurewebsites.net/respond";
 email.addTo(ss.fromadd);
 email.setFrom("patelritesh261@gmail.com");
 email.setSubject("Plese give your important feedbak.");
-email.setHtml("<html><body><main><h2>HI There,</main><h4>Please do following survey and give your feedback</h4><table><tr><td>Survey Name : </td><td>"+ss.surveyName+"</td></tr><tr><td>Created By : </td><td>"+ss.displayName+"</td></tr><tr><td colspan=2><a href="+domain+"/"+ss.displayName+"/"+ss.surveyType+"/"+ss.surveyName+"/"+ss.formadd+" >Give feedback</a></td></tr></table></body></html>");
+email.setHtml("<html><body><main><h2>HI There,</main><h4>Please do following survey and give your feedback</h4><table><tr><td>Survey Name : </td><td>"+ss.surveyName+"</td></tr><tr><td>Created By : </td><td>"+ss.displayName+"</td></tr><tr><td>Copy link and paste in address bar </td>http://samplesurvey3.azurewebsites.net/respond/"+ss.displayName+"/"+ss.surveyType+"/"+ss.surveyName+"/"+ss.fromadd+"<td></td></tr><tr><td colspan=2><a href="+domain+"/"+ss.displayName+"/"+ss.surveyType+"/"+ss.surveyName+"/"+ss.formadd+" >Give feedback</a></td></tr></table></body></html>");
 //email.setHtml("/respond/"+ss.displayName+"/"+ss.surveyType+"/"+ss.surveyName);
 
 
